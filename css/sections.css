@@ -1,0 +1,569 @@
+/* ============================================================
+   ESTUDIO — sections.css
+   Tecnología: CSS3 — Grid, Flexbox, CSS custom properties
+   Scope: Todas las secciones post-hero: About, Proyectos,
+          Servicios, Filosofía, Contacto, Footer
+   ============================================================ */
+
+/* ---- SECCIÓN BASE ---- */
+.section {
+  padding-block: var(--space-32);
+}
+
+.section--tight {
+  padding-block: var(--space-24);
+}
+
+.section--dark {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.section--surface {
+  background: var(--surface);
+}
+
+.section__header {
+  margin-bottom: var(--space-16);
+}
+
+.section__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.section__label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--ink-muted);
+}
+
+.section--dark .section__label {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.section--dark .section__label::before {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.section__title {
+  font-size: var(--text-4xl);
+  font-weight: bold;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.section--dark .section__title {
+  color: var(--white);
+}
+
+.section__subtitle {
+  margin-top: var(--space-4);
+  font-size: var(--text-lg);
+  color: var(--ink-secondary);
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+.section--dark .section__subtitle {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ============================================================
+   ABOUT — dos columnas editoriales
+   ============================================================ */
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: start;
+}
+
+.about__text p {
+  font-size: var(--text-lg);
+  line-height: 1.75;
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-4);
+  max-width: 48ch;
+}
+
+.about__text p:first-child {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+
+.about__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.about__stat {
+  background: var(--white);
+  padding: var(--space-8);
+}
+
+.about__stat-number {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.about__stat-label {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+}
+
+/* ============================================================
+   PROYECTOS — Bento Grid
+   ============================================================ */
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 1px;
+  background: var(--white);
+  border: 1px transparent var(--white);
+  overflow: hidden;
+}
+
+/* Tarjetas asimétrico: proyecto featured ocupa 7 cols */
+.project-card {
+  background: var(--white);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.project-card:nth-child(1) { grid-column: span 7; }
+.project-card:nth-child(2) { grid-column: span 5; }
+.project-card:nth-child(3) { grid-column: span 4; }
+.project-card:nth-child(4) { grid-column: span 4; }
+.project-card:nth-child(5) { grid-column: span 4; }
+
+.project-card__image {
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+
+.project-card:nth-child(1) .project-card__image {
+  aspect-ratio: 16/9;
+}
+
+.project-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out-expo);
+  will-change: transform;
+}
+
+.project-card:hover .project-card__image img {
+  transform: scale(1.04);
+}
+
+.project-card__info {
+  padding: var(--space-6) var(--space-6) var(--space-8);
+}
+
+.project-card__year {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+.project-card__name {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+
+.project-card:nth-child(1) .project-card__name {
+  font-size: var(--text-2xl);
+}
+
+.project-card__location {
+  font-size: var(--text-sm);
+  color: var(--ink-secondary);
+}
+
+/* Overlay al hover */
+.project-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 17, 0);
+  transition: background var(--duration-slow);
+  pointer-events: none;
+}
+
+.project-card:hover .project-card__overlay {
+  background: rgba(17, 17, 17, 0.03);
+}
+
+/* Ver proyecto link */
+.project-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  transition: color var(--duration-fast), gap var(--duration-fast);
+}
+
+.project-card__link svg {
+  width: 12px;
+  height: 12px;
+}
+
+.project-card:hover .project-card__link {
+  color: var(--ink);
+  gap: var(--space-3);
+}
+
+/* ============================================================
+   SERVICIOS — lista editorial con líneas
+   ============================================================ */
+.services__list {
+  list-style: none;
+}
+
+.service-item {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: start;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--duration-fast);
+}
+
+.service-item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.service-item__number {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+  padding-top: 4px;
+}
+
+.service-item__body {}
+
+.service-item__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+
+.service-item__desc {
+  font-size: var(--text-sm);
+  color: var(--ink-secondary);
+  max-width: 52ch;
+}
+
+.service-item__arrow {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity var(--duration-base) var(--ease-out-expo),
+              transform var(--duration-base) var(--ease-out-expo);
+  color: var(--ink-muted);
+}
+
+.service-item:hover .service-item__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ============================================================
+   FILOSOFÍA — cita grande, fondo oscuro
+   ============================================================ */
+.philosophy {
+  background: var(--ink);
+  padding-block: var(--space-40);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient blob */
+.philosophy::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+  pointer-events: none;
+  animation: blobDrift 25s ease-in-out infinite alternate;
+}
+
+@keyframes blobDrift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-5%, 8%) scale(1.08); }
+}
+
+.philosophy__inner {
+  max-width: 900px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+  text-align: center;
+}
+
+.philosophy__quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: var(--space-8);
+}
+
+.philosophy__quote em {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.philosophy__attribution {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================================
+   RECONOCIMIENTOS — horizontal scroll en mobile
+   ============================================================ */
+.awards__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.award-item {
+  background: var(--white);
+  padding: var(--space-8);
+}
+
+.award-item__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+}
+
+.award-item__name {
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: var(--space-1);
+  line-height: 1.4;
+}
+
+.award-item__org {
+  font-size: var(--text-sm);
+  color: var(--ink-secondary);
+}
+
+/* ============================================================
+   CONTACTO
+   ============================================================ */
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: start;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-field label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-family: var(--font-sans);
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 300;
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--duration-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-color: var(--ink-secondary);
+}
+
+.form-field textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: var(--ink-muted);
+}
+
+.contact__info {
+  padding-top: var(--space-4);
+}
+
+.contact__detail {
+  margin-bottom: var(--space-8);
+}
+
+.contact__detail-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-2);
+}
+
+.contact__detail-value {
+  font-size: var(--text-lg);
+  color: var(--ink);
+  font-weight: 300;
+}
+
+.contact__detail-value a:hover {
+  color: var(--ink-secondary);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  padding-block: var(--space-12);
+  border-top: 1px solid var(--border);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.footer__copy {
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  letter-spacing: 0.02em;
+}
+
+.footer__links {
+  display: flex;
+  gap: var(--space-6);
+  list-style: none;
+}
+
+.footer__links a {
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  transition: color var(--duration-fast);
+}
+
+.footer__links a:hover {
+  color: var(--ink);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .about__grid { grid-template-columns: 1fr; }
+  .awards__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .section { padding-block: var(--space-16); }
+  .section__title { font-size: var(--text-3xl); }
+
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+  .project-card:nth-child(n) { grid-column: span 1; }
+
+  .service-item {
+    grid-template-columns: 2.5rem 1fr;
+  }
+  .service-item__arrow { display: none; }
+
+  .contact__grid { grid-template-columns: 1fr; }
+  .about__stats { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .awards__grid { grid-template-columns: 1fr; }
+  .footer__inner { flex-direction: column; align-items: flex-start; }
+}

@@ -1,0 +1,202 @@
+/* ============================================================
+   ESTUDIO — navbar.css
+   Tecnología: CSS3 — backdrop-filter, transitions
+   Scope: Barra de navegación fija, estilo Apple translúcido
+   ============================================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding-inline: var(--space-6);
+  background: rgba(251, 251, 250, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-base) var(--ease-standard),
+              background var(--duration-base) var(--ease-standard);
+}
+
+.navbar.scrolled {
+  border-bottom-color: var(--border);
+  background: rgba(251, 251, 250, 0.50);
+}
+
+/* Dentro de hero (fondo oscuro) */
+.navbar.hero-active {
+  background: rgba(10, 10, 10, 0);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.navbar.hero-active .navbar__logo,
+.navbar.hero-active .navbar__link {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.navbar.hero-active .navbar__cta {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+}
+
+.navbar__inner {
+  width: 100%;
+  max-width: var(--max-content);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo / wordmark */
+.navbar__logo {
+  height: 52px;
+  cursor: pointer;
+  background-color: var(--ink); /* Your desired color */
+  -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
+  mask-image: url('../imgs/FLEEK_Completo-01.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  transition: color var(--duration-fast);
+}
+
+.navbar__logo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.navbar.hero-active .navbar__logo {
+  background-color: var(--white); /* Your desired color */
+}
+
+.navbar__logo img {
+  opacity: 0;
+  height: 52px;
+}
+
+/* Links centrados */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  list-style: none;
+}
+
+.navbar__link {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--ink-secondary);
+  letter-spacing: 0.005em;
+  transition: color var(--duration-fast);
+  position: relative;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--duration-base) var(--ease-out-expo);
+}
+
+.navbar__link:hover {
+  color: var(--ink);
+}
+
+.navbar__link:hover::after {
+  width: 100%;
+}
+
+/* CTA derecha */
+.navbar__cta {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  padding: 6px var(--space-4);
+  background: var(--ink);
+  color: var(--white);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.01em;
+  transition: background var(--duration-fast),
+              transform var(--duration-fast);
+}
+
+.navbar__cta:hover {
+  background: #333333;
+}
+
+.navbar__cta:active {
+  transform: scale(0.97);
+}
+
+/* Hamburger mobile */
+.navbar__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: var(--space-2);
+}
+
+.navbar__burger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform var(--duration-base) var(--ease-out-expo),
+              opacity var(--duration-base);
+}
+
+.navbar.hero-active .navbar__burger span {
+  background: var(--white);
+}
+
+/* Mobile nav drawer */
+.navbar__drawer {
+  position: fixed;
+  inset: 52px 0 0 0;
+  background: rgba(251, 251, 250, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-standard);
+  z-index: 99;
+}
+
+.navbar__drawer.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.navbar__drawer .navbar__link {
+  font-size: var(--text-2xl);
+  font-family: var(--font-serif);
+  font-weight: 300;
+  color: var(--ink);
+}
+
+@media (max-width: 768px) {
+  .navbar__links,
+  .navbar__cta {
+    display: none;
+  }
+
+  .navbar__burger {
+    display: flex;
+  }
+}

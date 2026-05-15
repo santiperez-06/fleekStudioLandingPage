@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Casa Carrasco — Estudio.Arq. Residencia unifamiliar en Montevideo, Uruguay. 2023." />
+  <title>FLEEK studio</title>
+
+  <!--
+    ┌──────────────────────────────────────────────────┐
+    │  ARCHIVOS INVOLUCRADOS EN ESTA PÁGINA            │
+    │                                                  │
+    │  CSS:                                            │
+    │    css/main.css      ← reset, variables, utils   │
+    │    css/navbar.css    ← navbar compartida         │
+    │    css/sections.css  ← footer compartido         │
+    │    css/project.css   ← estilos exclusivos        │
+    │                         de esta página           │
+    │  JS:                                             │
+    │    js/ui.js          ← navbar scroll, reveal     │
+    │    js/lightbox.js    ← lightbox del mosaico      │
+    │                                                  │
+    │  PARA DUPLICAR ESTA PÁGINA:                      │
+    │    Copiar proyecto.html → nuevo-proyecto.html    │
+    │    Editar: title, meta description,              │
+    │    .project-header__title, metadatos,            │
+    │    src de todas las imágenes del mosaico,        │
+    │    y los links del .project-nav                  │
+    └──────────────────────────────────────────────────┘
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+  <link rel="stylesheet" href="css/project.css" />
+</head>
+
+<body>
+
+  <!-- ====================================================
+       NAVBAR — idéntica a index.html
+       El JS de ui.js maneja el scroll behavior.
+       En esta página no hay hero oscuro, así que la
+       navbar arranca directamente en modo "scrolled".
+  ==================================================== -->
+  <header class="navbar" role="banner">
+    <div class="navbar__inner">
+ 
+      <!-- Wordmark -->
+      <div href="index.html" class="navbar__logo">
+        <img src="imgs/FLEEK_Completo-01.png"></img>
+        <a href="index.html" style="position: absolute; inset: 0; z-index: 1;"></a>
+      </div>
+ 
+      <!-- Nav links (desktop) -->
+      <nav aria-label="Navegación principal">
+        <ul class="navbar__links">
+          <li><a href="index.html#proyectos" class="navbar__link">Proyectos</a></li>
+          <li><a href="#contacto" class="navbar__link">Contacto</a></li>
+        </ul>
+      </nav>
+ 
+      <!-- Burger mobile -->
+      <button class="navbar__burger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+ 
+    </div>
+  </header>
+ 
+  <!-- Mobile drawer -->
+  <nav class="navbar__drawer" aria-label="Menú móvil">
+    <a href="#proyectos" class="navbar__link">Proyectos</a>
+    <a href="#contacto" class="navbar__link">Contacto</a>
+  </nav>
+
+
+  <main>
+
+    <!-- ====================================================
+         HEADER DEL PROYECTO
+         Nombre, ubicación, fecha, tipo
+    ==================================================== -->
+    <section class="project-header">
+      <div class="container">
+        <div class="project-header__inner">
+
+          <!-- Izquierda: breadcrumb + título -->
+          <div>
+            <div class="project-header__eyebrow reveal">
+              <a href="index.html#proyectos">Proyectos</a>
+              <span>›</span>
+              <span>Casa Carrasco</span>
+            </div>
+
+            <h1 class="project-header__title reveal" data-delay="80">
+              Casa Carrasco
+            </h1>
+          </div>
+
+          <!-- Derecha: metadatos -->
+          <div class="project-header__meta reveal" data-delay="160">
+
+            <div class="project-meta-item">
+              <div class="project-meta-item__label">Ubicación</div>
+              <div class="project-meta-item__value">Montevideo, Uruguay</div>
+            </div>
+
+            <div class="project-meta-item">
+              <div class="project-meta-item__label">Año</div>
+              <div class="project-meta-item__value">2023</div>
+            </div>
+
+            <!--
+              Campos opcionales — descomentar si aplican:
+
+            <div class="project-meta-item">
+              <div class="project-meta-item__label">Superficie</div>
+              <div class="project-meta-item__value">320 m²</div>
+            </div>
+
+            <div class="project-meta-item">
+              <div class="project-meta-item__label">Estado</div>
+              <div class="project-meta-item__value">Construido</div>
+            </div>
+            -->
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================
+         MOSAICO DE FOTOS
+         Estructura de filas flexibles.
+         Cada .mosaic-row define la proporción entre imágenes.
+         Clases disponibles en project.css:
+           --full    → 1 imagen ancho completo
+           --half    → 2 imágenes iguales
+           --thirds  → 3 imágenes iguales
+           --2-1     → grande | chica
+           --1-2     → chica | grande
+           --1-1-2   → chica | chica | grande
+
+         AGREGAR FOTOS REALES:
+           Reemplazar cada src="https://picsum.photos/..."
+           con la ruta a tu imagen real.
+           Ej: src="assets/images/casa-carrasco-01.webp"
+
+         El lightbox toma automáticamente todas las imágenes
+         del mosaico en orden DOM (ver lightbox.js).
+    ==================================================== -->
+    <section class="project-mosaic" aria-label="Fotos del proyecto">
+      <div class="container">
+
+        <!-- Fila 1: imagen full width — foto principal -->
+        <div class="mosaic-row mosaic-row--full reveal">
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-01/1600/900"
+              alt="Casa Carrasco — vista exterior frontal"
+              loading="eager"
+              fetchpriority="high"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 2: grande izquierda + chica derecha -->
+        <div class="mosaic-row mosaic-row--2-1 reveal" data-delay="60">
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-02/1200/800"
+              alt="Casa Carrasco — sala principal con doble altura"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-03/800/800"
+              alt="Casa Carrasco — detalle escalera de hormigón"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 3: tres columnas iguales -->
+        <div class="mosaic-row mosaic-row--thirds reveal" data-delay="80">
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-04/800/600"
+              alt="Casa Carrasco — cocina integrada"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-05/800/600"
+              alt="Casa Carrasco — dormitorio principal"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-06/800/600"
+              alt="Casa Carrasco — baño principal con terminaciones en mármol"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 4: chica izquierda + grande derecha -->
+        <div class="mosaic-row mosaic-row--1-2 reveal" data-delay="60">
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-07/700/900"
+              alt="Casa Carrasco — patio interior con vegetación"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-08/1400/900"
+              alt="Casa Carrasco — terraza con piscina al atardecer"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila 5: dos imágenes iguales -->
+        <div class="mosaic-row mosaic-row--half reveal" data-delay="60">
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-09/1000/700"
+              alt="Casa Carrasco — fachada nocturna con iluminación"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="mosaic-item">
+            <img
+              src="https://picsum.photos/seed/cc-10/1000/700"
+              alt="Casa Carrasco — detalle materialidad exterior"
+              loading="lazy"
+            />
+            <div class="mosaic-item__zoom" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="6.5" cy="6.5" r="4.5"/>
+                <path d="M10 10l3 3"/>
+                <path d="M5 6.5h3M6.5 5v3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!--
+          AGREGAR MÁS FILAS:
+          Copiar cualquier bloque .mosaic-row y cambiar:
+            - La clase de proporción (--full, --half, etc.)
+            - Los src de las imágenes
+            - Los alt descriptivos
+        -->
+
+      </div>
+    </section>
+
+
+    <!-- ====================================================
+         NAVEGACIÓN ENTRE PROYECTOS
+         Actualizar href y textos para cada proyecto.
+    ==================================================== -->
+    <nav class="project-nav" aria-label="Proyectos anterior y siguiente">
+      <div class="container">
+        <div class="project-nav__inner">
+
+          <a href="proyecto-edificio-san-telmo.html" class="project-nav__item project-nav__item--prev">
+            <span class="project-nav__label">Anterior</span>
+            <span class="project-nav__name">Edificio San Telmo</span>
+            <span class="project-nav__location">Buenos Aires, Argentina</span>
+          </a>
+
+          <a href="proyecto-centro-cultural-palermo.html" class="project-nav__item project-nav__item--next">
+            <span class="project-nav__label">Siguiente</span>
+            <span class="project-nav__name">Centro Cultural Palermo</span>
+            <span class="project-nav__location">Buenos Aires, Argentina</span>
+          </a>
+
+        </div>
+      </div>
+    </nav>
+
+  </main>
+
+
+  <!-- ====================================================
+       LIGHTBOX
+       Elemento fijo, fuera del flujo normal.
+       El JS de lightbox.js lo controla.
+  ==================================================== -->
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de foto">
+
+    <button class="lightbox__close" aria-label="Cerrar">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M1 1l12 12M13 1L1 13"/>
+      </svg>
+    </button>
+
+    <button class="lightbox__btn lightbox__btn--prev" aria-label="Foto anterior">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M11 4L6 9l5 5"/>
+      </svg>
+    </button>
+
+    <div class="lightbox__img-wrap">
+      <img class="lightbox__img" src="" alt="" />
+    </div>
+
+    <button class="lightbox__btn lightbox__btn--next" aria-label="Foto siguiente">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M7 4l5 5-5 5"/>
+      </svg>
+    </button>
+
+    <span class="lightbox__counter" aria-live="polite"></span>
+
+  </div>
+
+
+  <!-- ====================================================
+       FOOTER — idéntico a index.html
+  ==================================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__copy">
+          © 2025 Estudio.Arq — Todos los derechos reservados
+        </span>
+        <ul class="footer__links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">ArchDaily</a></li>
+          <li><a href="#">Aviso legal</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts — ui.js maneja navbar y reveal, lightbox.js el mosaico -->
+  <script src="js/ui.js" defer></script>
+  <script src="js/lightbox.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+/* ============================================================
+   ESTUDIO — project.css
+   Tecnología: CSS3 puro con custom properties
+   Scope: Página individual de proyecto.
+          Header con datos, mosaico de fotos, lightbox.
+   ============================================================ */
+
+/* ---- HEADER DEL PROYECTO ---- */
+.project-header {
+  padding-top: calc(52px + var(--space-24)); /* offset navbar */
+  padding-bottom: var(--space-16);
+  border-bottom: 1px solid var(--border);
+}
+
+.project-header__inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--space-8);
+}
+
+.project-header__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-6);
+}
+
+.project-header__eyebrow a {
+  color: var(--ink-muted);
+  transition: color var(--duration-fast);
+}
+
+.project-header__eyebrow a:hover {
+  color: var(--ink);
+}
+
+/* Separador › */
+.project-header__eyebrow span {
+  opacity: 0.4;
+}
+
+.project-header__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: bold;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  color: var(--ink);
+  max-width: 18ch;
+}
+
+/* Metadatos a la derecha */
+.project-header__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-4);
+  padding-bottom: 4px; /* alinear con baseline del título */
+}
+
+.project-meta-item {
+  text-align: right;
+}
+
+.project-meta-item__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 3px;
+}
+
+.project-meta-item__value {
+  font-size: var(--text-base);
+  color: var(--ink);
+  font-weight: 400;
+}
+
+/* ---- MOSAICO DE FOTOS ---- */
+.project-mosaic {
+  padding-block: var(--space-16);
+}
+
+/*
+  El mosaico usa un sistema de "filas" con proporciones variables.
+  Cada .mosaic-row es un flex row con gap.
+  Las imágenes llenan el espacio según su flex-grow.
+
+  Patrones de fila disponibles (se repiten o mezclan):
+    .mosaic-row--full      → 1 imagen que ocupa todo el ancho
+    .mosaic-row--half      → 2 imágenes iguales
+    .mosaic-row--thirds    → 3 imágenes iguales
+    .mosaic-row--2-1       → imagen grande + imagen chica (2:1)
+    .mosaic-row--1-2       → imagen chica + imagen grande (1:2)
+    .mosaic-row--1-1-2     → chica + chica + grande
+*/
+
+.mosaic-row {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.mosaic-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Tipos de fila */
+.mosaic-row--full   .mosaic-item { flex: 1; }
+.mosaic-row--half   .mosaic-item { flex: 1; }
+.mosaic-row--thirds .mosaic-item { flex: 1; }
+
+.mosaic-row--2-1 .mosaic-item:first-child { flex: 2; }
+.mosaic-row--2-1 .mosaic-item:last-child  { flex: 1; }
+
+.mosaic-row--1-2 .mosaic-item:first-child { flex: 1; }
+.mosaic-row--1-2 .mosaic-item:last-child  { flex: 2; }
+
+.mosaic-row--1-1-2 .mosaic-item:nth-child(1) { flex: 1; }
+.mosaic-row--1-1-2 .mosaic-item:nth-child(2) { flex: 1; }
+.mosaic-row--1-1-2 .mosaic-item:nth-child(3) { flex: 2; }
+
+/* Ítem individual */
+.mosaic-item {
+  overflow: hidden;
+  background: var(--surface);
+  cursor: zoom-in;
+  position: relative;
+}
+
+/* Altura fija por fila — se puede sobreescribir con clase */
+.mosaic-row { height: 480px; }
+.mosaic-row--full { height: 640px; }
+.mosaic-row--thirds { height: 380px; }
+
+.mosaic-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.7s var(--ease-out-expo);
+  will-change: transform;
+}
+
+.mosaic-item:hover img {
+  transform: scale(1.03);
+}
+
+/* Overlay sutil al hover */
+.mosaic-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background var(--duration-slow);
+  pointer-events: none;
+}
+
+.mosaic-item:hover::after {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Ícono de zoom */
+.mosaic-item__zoom {
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity var(--duration-base) var(--ease-out-expo),
+              transform var(--duration-base) var(--ease-out-expo);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.mosaic-item__zoom svg {
+  width: 14px;
+  height: 14px;
+  color: var(--ink);
+}
+
+.mosaic-item:hover .mosaic-item__zoom {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- LIGHTBOX ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 10, 10, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+.lightbox.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox__img-wrap {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox__img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.4s var(--ease-out-expo),
+              transform 0.4s var(--ease-out-expo);
+}
+
+.lightbox.open .lightbox__img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Botones de navegación */
+.lightbox__btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+  z-index: 201;
+}
+
+.lightbox__btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--white);
+}
+
+.lightbox__btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.lightbox__btn--prev { left: var(--space-6); }
+.lightbox__btn--next { right: var(--space-6); }
+
+/* Cerrar */
+.lightbox__close {
+  position: fixed;
+  top: var(--space-6);
+  right: var(--space-6);
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast);
+  z-index: 201;
+}
+
+.lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--white);
+}
+
+.lightbox__close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Contador */
+.lightbox__counter {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.3);
+  z-index: 201;
+}
+
+/* ---- NAVEGACIÓN ENTRE PROYECTOS ---- */
+.project-nav {
+  border-top: 1px solid var(--border);
+  padding-block: var(--space-12);
+}
+
+.project-nav__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.project-nav__item {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: background var(--duration-fast);
+  border-radius: var(--radius-md);
+}
+
+.project-nav__item:hover {
+  background: var(--surface);
+}
+
+.project-nav__item--next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.project-nav__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.project-nav__item--prev .project-nav__label::before {
+  content: '←';
+}
+
+.project-nav__item--next .project-nav__label::after {
+  content: '→';
+}
+
+.project-nav__name {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.project-nav__location {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .project-header__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .project-header__meta {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  .project-meta-item {
+    text-align: left;
+  }
+
+  /* En mobile el mosaico se vuelve columna simple */
+  .mosaic-row {
+    flex-direction: column;
+    height: auto !important;
+  }
+
+  .mosaic-item {
+    height: 280px;
+    flex: none !important;
+  }
+
+  .lightbox__btn--prev { left: var(--space-3); }
+  .lightbox__btn--next { right: var(--space-3); }
+
+  .project-nav__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .project-nav__item--next {
+    align-items: flex-start;
+    text-align: left;
+    border-top: 1px solid var(--border);
+  }
+}

@@ -1,0 +1,275 @@
+/* ============================================================
+   ESTUDIO — hero.css
+   Tecnología: CSS3 — transitions, object-fit, clip-path
+   Scope: Hero fullscreen con slideshow de proyectos
+   ============================================================ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* ----- Slideshow ----- */
+.hero__slides {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out-expo);
+  will-change: opacity;
+}
+
+.hero__slide.active {
+  opacity: 1;
+}
+
+.hero__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* Pequeño zoom-out al entrar */
+  transform: scale(1.04);
+  transition: transform 8s linear;
+}
+
+.hero__slide.active img {
+  transform: scale(1.0);
+}
+
+/* Overlay oscuro editorial */
+.hero__slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.04) 40%,
+    rgba(0, 0, 0, 0.48) 100%
+  );
+}
+
+/* ----- Contenido central ----- */
+.hero__content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: var(--space-16);
+  max-width: var(--max-content);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.hero__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: var(--space-4);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s var(--ease-out-expo) 0.2s,
+              transform 0.8s var(--ease-out-expo) 0.2s;
+}
+
+.hero__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-hero);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  color: var(--white);
+  max-width: 14ch;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.9s var(--ease-out-expo) 0.4s,
+              transform 0.9s var(--ease-out-expo) 0.4s;
+}
+
+.hero__title em {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.hero__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s var(--ease-out-expo) 0.65s,
+              transform 0.8s var(--ease-out-expo) 0.65s;
+}
+
+.hero__meta-link {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 2px;
+  transition: color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.hero__meta-link:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.hero__meta-link svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--duration-fast);
+}
+
+.hero__meta-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* Animación al cargar */
+.hero--loaded .hero__eyebrow,
+.hero--loaded .hero__title,
+.hero--loaded .hero__meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ----- Slide label (nombre del proyecto) ----- */
+.hero__slide-label {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  right: var(--space-8);
+  transform: translateY(-50%);
+  writing-mode: vertical-lr;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  transition: opacity var(--duration-slow);
+}
+
+/* ----- Indicadores / dots ----- */
+.hero__indicators {
+  position: absolute;
+  z-index: 10;
+  bottom: var(--space-8);
+  right: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.hero__dot {
+  width: 5px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  border-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid transparent;
+  transition: background var(--duration-base), height var(--duration-base);
+  cursor: pointer;
+}
+
+.hero__dot.active {
+  background: rgba(255, 255, 255, 0.85);
+  height: 32px;
+}
+
+/* ----- Progress bar ----- */
+.hero__progress {
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: width linear; /* duración se pone via JS */
+}
+
+/* ----- Scroll hint ----- */
+.hero__scroll-hint {
+  position: absolute;
+  z-index: 10;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0;
+  animation: fadeInHint 1s var(--ease-out-expo) 1.8s forwards;
+}
+
+.hero__scroll-hint span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: scrollLine 2s ease-in-out 2s infinite;
+}
+
+@keyframes scrollLine {
+  0%   { top: -100%; }
+  50%  { top: 0%; }
+  100% { top: 100%; }
+}
+
+@keyframes fadeInHint {
+  to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero__slide-label { display: none; }
+  .hero__indicators {
+    flex-direction: row;
+    bottom: var(--space-6);
+    right: var(--space-4);
+  }
+  .hero__dot {
+    width: 20px;
+    height: 5px;
+  }
+  .hero__dot.active {
+    width: 32px;
+    height: 5px;
+  }
+}
