@@ -56,7 +56,7 @@ function initMobileDrawer() {
 
   let open = false;
 
-  burger.addEventListener('click', () => {
+  burger.addEventListener('touched', () => {
     open = !open;
     drawer.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
