@@ -151,13 +151,9 @@
   display: block;
   width: 22px;
   height: 1.5px;
-  background: var(--ink);
+  background: var(--white);
   transition: transform var(--duration-base) var(--ease-out-expo),
               opacity var(--duration-base);
-}
-
-.navbar.hero-active .navbar__burger span {
-  background: var(--white);
 }
 
 /* Mobile nav drawer */
