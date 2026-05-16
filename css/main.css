@@ -39,6 +39,7 @@
   --ink:           #000000;
   --ink-secondary: #282828;
   --ink-muted:     #E2E2E2;
+  --highlight:     #EDFF00;
  
   /* Pasteles semánticos */
   --pale-red:      #FDEBEC;
@@ -113,7 +114,7 @@ html {
 }
  
 body {
-  background-color: var(--canvas);
+  background-color: var(--ink);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -196,9 +197,9 @@ p {
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-6);
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 400;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: bold;
   letter-spacing: 0.01em;
   border-radius: var(--radius-sm);
   transition: background var(--duration-fast) var(--ease-standard),
@@ -206,12 +207,15 @@ p {
 }
  
 .btn--primary {
+  border: 1px solid transparent;
+  border-color: rgba(255, 255, 255, 0.08);;
   background: var(--ink);
   color: var(--white);
 }
  
 .btn--primary:hover {
-  background: #333333;
+  background: var(--highlight);
+  color: var(--ink)
 }
  
 .btn--primary:active {

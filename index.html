@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Estudio de arquitectura. Proyectos residenciales, comerciales e institucionales con rigor y sensibilidad material." />
+  <meta name="description"
+    content="Estudio de arquitectura. Proyectos residenciales, comerciales e institucionales con rigor y sensibilidad material." />
   <title>FLEEK studio</title>
- 
+
   <!-- Preconnect fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
- 
+
   <!-- Estilos propios (orden importa) -->
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/navbar.css" />
@@ -18,9 +20,9 @@
 
   <link rel="icon" type="image/jpeg" href="imgs/icon.jpeg">
 </head>
- 
+
 <body>
- 
+
   <!-- ====================================================
        NAVBAR
        Fija, transparente sobre hero, opaca al bajar.
@@ -28,12 +30,12 @@
   ==================================================== -->
   <header class="navbar" role="banner">
     <div class="navbar__inner">
- 
+
       <!-- Wordmark -->
       <div href="/" class="navbar__logo">
         <img src="imgs/FLEEK_Completo-01.png"></img>
       </div>
- 
+
       <!-- Nav links (desktop) -->
       <nav aria-label="Navegación principal">
         <ul class="navbar__links">
@@ -41,22 +43,22 @@
           <li><a href="#contacto" class="navbar__link">Contacto</a></li>
         </ul>
       </nav>
- 
+
       <!-- Burger mobile -->
       <button class="navbar__burger" aria-label="Abrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
- 
+
     </div>
   </header>
- 
+
   <!-- Mobile drawer -->
   <nav class="navbar__drawer" aria-label="Menú móvil">
     <a href="#proyectos" class="navbar__link">Proyectos</a>
     <a href="#contacto" class="navbar__link">Contacto</a>
   </nav>
- 
- 
+
+
   <!-- ====================================================
        HERO SLIDESHOW
        Fullscreen. Imágenes van en data-src para lazy load
@@ -64,10 +66,10 @@
        Tecnología: hero-slideshow.js (Vanilla JS)
   ==================================================== -->
   <section class="hero" aria-label="Proyectos destacados">
- 
+
     <!-- Slides — agregar/quitar según cantidad de proyectos -->
     <div class="hero__slides">
- 
+
       <!--
         Reemplazar src con imágenes reales de los proyectos.
         El atributo data-project es el nombre que aparece
@@ -75,59 +77,38 @@
         picsum.photos usa la seed para devolver siempre la
         misma imagen (útil durante desarrollo).
       -->
- 
+
       <div class="hero__slide" data-project="Kotaro — 2025">
-        <img
-          src="imgs/projects/kotaro/img00.jpg"
-          alt="Casa Carrasco — interior sala principal"
-          width="1920" height="1080"
-          loading="eager"
-          fetchpriority="high"
-        />
+        <img src="imgs/projects/kotaro/img00.jpg" alt="Casa Carrasco — interior sala principal" width="1920"
+          height="1080" loading="eager" fetchpriority="high" />
       </div>
- 
+
       <div class="hero__slide" data-project="CMV Odontología — 2025">
-        <img
-          src="imgs/projects/cmvdental/img00.jpg"
-          alt="Centro Cultural Palermo — fachada exterior"
-          width="1920" height="1080"
-          loading="lazy"
-        />
+        <img src="imgs/projects/cmvdental/img00.jpg" alt="Centro Cultural Palermo — fachada exterior" width="1920"
+          height="1080" loading="lazy" />
       </div>
- 
+
       <div class="hero__slide" data-project="STAIN Coffee — 2025">
-        <img
-          src="imgs/projects/staincoffee/img00.jpg"
-          alt="Torre Monserrat — terraza mirador"
-          width="1920" height="1080"
-          loading="lazy"
-        />
+        <img src="imgs/projects/staincoffee/img00.jpg" alt="Torre Monserrat — terraza mirador" width="1920"
+          height="1080" loading="lazy" />
       </div>
- 
+
       <div class="hero__slide" data-project="Bolivia Caballito — 2025">
-        <img
-          src="imgs/projects/boliviacaballito/img00.jpg"
-          alt="Residencia Nordelta — fachada nocturna"
-          width="1920" height="1080"
-          loading="lazy"
-        />
+        <img src="imgs/projects/boliviacaballito/img00.jpg" alt="Residencia Nordelta — fachada nocturna" width="1920"
+          height="1080" loading="lazy" />
       </div>
- 
+
       <div class="hero__slide" data-project="Bolivia Paseo del Sol — 2025">
-        <img
-          src="imgs/projects/boliviapaseodelsol/img00.jpg"
-          alt="Edificio San Telmo — patio interior"
-          width="1920" height="1080"
-          loading="lazy"
-        />
+        <img src="imgs/projects/boliviapaseodelsol/img00.jpg" alt="Edificio San Telmo — patio interior" width="1920"
+          height="1080" loading="lazy" />
       </div>
- 
+
     </div>
     <!-- /.hero__slides -->
- 
+
     <!-- Label nombre proyecto (costado derecho) -->
     <span class="hero__slide-label" aria-hidden="true"></span>
- 
+
     <!-- Indicadores -->
     <div class="hero__indicators" role="tablist" aria-label="Navegar proyectos">
       <button class="hero__dot active" role="tab" aria-label="Proyecto 1"></button>
@@ -136,10 +117,10 @@
       <button class="hero__dot" role="tab" aria-label="Proyecto 4"></button>
       <button class="hero__dot" role="tab" aria-label="Proyecto 5"></button>
     </div>
- 
+
     <!-- Barra de progreso -->
     <div class="hero__progress" aria-hidden="true"></div>
- 
+
     <!-- Contenido textual -->
     <div class="hero__content">
       <div class="hero__meta">
@@ -147,136 +128,112 @@
           Ver proyectos
           <!-- Arrow icon inline SVG -->
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4"/>
+            <path d="M3 8h10M9 4l4 4-4 4" />
           </svg>
         </a>
         <a href="#nosotros" class="hero__meta-link">Conocer el estudio</a>
       </div>
     </div>
- 
+
   </section>
   <!-- /.hero -->
- 
- 
+
+
   <main>
- 
+
     <!-- ====================================================
          PROYECTOS — bento grid asimétrico
     ==================================================== -->
     <section class="section section--surface" id="proyectos" aria-labelledby="projects-title">
       <div class="container">
- 
+
         <div class="section__header reveal">
           <p class="section__label">Obra seleccionada</p>
           <h2 class="section__title" id="projects-title">Proyectos</h2>
         </div>
- 
+
         <!-- Bento grid: ver css/sections.css para la distribución de columnas -->
         <div class="projects__grid stagger-group" role="list">
- 
+
           <!-- Proyecto 1 — grande, 7 columnas -->
           <article class="project-card stagger-item reveal" role="listitem">
-            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__image">
-              <img
-                src="imgs/projects/kotaro/img00.jpg"
-                alt="Casa Carrasco — vista exterior"
-                loading="lazy"
-                width="1200" height="700"
-              />
+              <img src="imgs/projects/kotaro/img00.jpg" alt="Kotaro" loading="lazy" />
             </div>
+            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__info">
+              <div class="project-card__name">Kotaro</div>
               <div class="project-card__year">2025</div>
-              <h3 class="project-card__name">Kotaro</h3>
-              <p class="project-card__location">Palermo Off, Buenos Aires</p>
-              <a href="proyecto.html" class="project-card__link">
-                Ver proyecto
-                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                  <path d="M2 6h8M6 2l4 4-4 4"/>
-                </svg>
-              </a>
             </div>
+            <a href="proyecto.html" class="project-card__link" aria-label="Ver proyecto Kotaro"></a>
           </article>
- 
+
           <!-- Proyecto 2 — 5 columnas -->
           <article class="project-card stagger-item reveal" role="listitem">
-            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__image">
-              <img
-                src="imgs/projects/boliviacaballito/img00.jpg"
-                alt="Centro Cultural Palermo — fachada"
-                loading="lazy" width="800" height="500"
-              />
+              <img src="imgs/projects/boliviacaballito/img00.jpg" alt="Bolivia" loading="lazy" />
             </div>
+            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__info">
+              <div class="project-card__name">Bolivia Caballito</div>
               <div class="project-card__year">2025</div>
-              <h3 class="project-card__name">Bolivia</h3>
-              <p class="project-card__location">Caballito, Buenos Aires</p>
-              <a href="proyecto.html" class="project-card__link">
-                Ver proyecto
-                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                  <path d="M2 6h8M6 2l4 4-4 4"/>
-                </svg>
-              </a>
             </div>
+            <a href="proyecto.html" class="project-card__link" aria-label="Ver proyecto Kotaro"></a>
           </article>
- 
+
           <!-- Proyectos 3–5 — 4 columnas cada uno -->
           <article class="project-card stagger-item reveal" role="listitem">
-            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__image">
-              <img src="imgs/projects/boliviapaseodelsol/img00.jpg" alt="Torre Monserrat" loading="lazy" width="700" height="450"/>
+              <img src="imgs/projects/cmvdental/img00.jpg" alt="CMV Odontología" loading="lazy" />
             </div>
+            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__info">
+              <div class="project-card__name">CMV Odontología</div>
               <div class="project-card__year">2025</div>
-              <h3 class="project-card__name">Bolivia</h3>
-              <p class="project-card__location">Paseo del Sol, Buenos Aires</p>
-              <a href="proyecto.html" class="project-card__link">Ver proyecto <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></a>
             </div>
+            <a href="proyecto.html" class="project-card__link" aria-label="Ver proyecto Kotaro"></a>
           </article>
- 
+
           <article class="project-card stagger-item reveal" role="listitem">
-            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__image">
-              <img src="imgs/projects/cmvdental/img00.jpg" alt="Residencia Nordelta" loading="lazy" width="700" height="450"/>
+              <img src="imgs/projects/boliviapaseodelsol/img00.jpg" alt="Bolivia" loading="lazy" />
             </div>
+            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__info">
+              <div class="project-card__name">Bolivia Paseo del Sol</div>
               <div class="project-card__year">2025</div>
-              <h3 class="project-card__name">CMV Odontología</h3>
-              <p class="project-card__location">Constitución, Buenos Aires</p>
-              <a href="proyecto.html" class="project-card__link">Ver proyecto <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></a>
             </div>
+            <a href="proyecto.html" class="project-card__link" aria-label="Ver proyecto Kotaro"></a>
           </article>
- 
+
           <article class="project-card stagger-item reveal" role="listitem">
-            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__image">
-              <img src="https://picsum.photos/seed/proj-5/700/450" alt="Edificio San Telmo" loading="lazy" width="700" height="450"/>
+              <img src="imgs/projects/staincoffee/img00.jpg" alt="STAIN Coffee" loading="lazy" />
             </div>
+            <div class="project-card__overlay" aria-hidden="true"></div>
             <div class="project-card__info">
-              <div class="project-card__year">2020</div>
-              <h3 class="project-card__name">Edificio San Telmo</h3>
-              <p class="project-card__location">Buenos Aires, Argentina</p>
-              <a href="proyecto.html" class="project-card__link">Ver proyecto <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></a>
+              <div class="project-card__name">STAIN Coffee</div>
+              <div class="project-card__year">2025</div>
             </div>
+            <a href="proyecto.html" class="project-card__link" aria-label="Ver proyecto Kotaro"></a>
           </article>
- 
+
         </div>
         <!-- /.projects__grid -->
       </div>
     </section>
- 
+
     <!-- ====================================================
          RECONOCIMIENTOS
     ==================================================== -->
     <section class="section section--surface" aria-labelledby="awards-title">
       <div class="container">
- 
+
         <div class="section__header reveal">
           <p class="section__label">Reconocimientos</p>
           <h2 class="section__title" id="awards-title">Premios</h2>
         </div>
- 
+
         <div class="awards__grid stagger-group">
           <div class="award-item stagger-item reveal">
             <div class="award-item__year">2024</div>
@@ -299,26 +256,26 @@
             <div class="award-item__org">Edificio San Telmo</div>
           </div>
         </div>
- 
+
       </div>
     </section>
- 
- 
+
+
     <!-- ====================================================
          CONTACTO
     ==================================================== -->
     <section class="section" id="contacto" aria-labelledby="contact-title">
       <div class="container">
- 
+
         <div class="section__header reveal">
           <p class="section__label">Hablemos</p>
           <h2 class="section__title" id="contact-title">
-            ¿Tenés un<br/>proyecto en mente?
+            ¿Tenés un<br />proyecto en mente?
           </h2>
         </div>
- 
+
         <div class="contact__grid">
- 
+
           <!--
             FORMULARIO DE CONTACTO
             Backend recomendado (elegir uno):
@@ -342,36 +299,18 @@
               Crear función en /api/contact.js que llame
               a un servicio de email (Resend, SendGrid, SES).
           -->
-          <form
-            class="contact__form"
-            action="/api/contact"
-            aria-label="Formulario de contacto"
-            novalidate
-          >
+          <form class="contact__form" action="/api/contact" aria-label="Formulario de contacto" novalidate>
             <div class="form-field">
               <label for="name">Nombre completo</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Paula Ramírez"
-                required
-                autocomplete="name"
-              />
+              <input type="text" id="name" name="name" placeholder="Paula Ramírez" required autocomplete="name" />
             </div>
- 
+
             <div class="form-field">
               <label for="email">Correo electrónico</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="paula@correo.com"
-                required
-                autocomplete="email"
-              />
+              <input type="email" id="email" name="email" placeholder="paula@correo.com" required
+                autocomplete="email" />
             </div>
- 
+
             <div class="form-field">
               <label for="type">Tipo de proyecto</label>
               <select id="type" name="type" required>
@@ -383,33 +322,29 @@
                 <option value="consulta">Consulta técnica</option>
               </select>
             </div>
- 
+
             <div class="form-field">
               <label for="message">Contanos sobre tu proyecto</label>
-              <textarea
-                id="message"
-                name="message"
-                placeholder="Ubicación, superficie aproximada, programa, plazo estimado…"
-                required
-              ></textarea>
+              <textarea id="message" name="message"
+                placeholder="Ubicación, superficie aproximada, programa, plazo estimado…" required></textarea>
             </div>
- 
+
             <button type="submit" class="btn btn--primary" style="width: fit-content; margin-top: 0.5rem;">
               Enviar consulta
             </button>
- 
+
           </form>
- 
+
           <!-- Info de contacto -->
           <div class="contact__info reveal" data-delay="100">
- 
+
             <div class="contact__detail">
               <div class="contact__detail-label">Teléfono</div>
               <div class="contact__detail-value">
                 <a href="tel:+541148000000">+54 11 4800-0000</a>
               </div>
             </div>
- 
+
             <div class="contact__detail">
               <div class="contact__detail-label">Email</div>
               <div class="contact__detail-value">
@@ -417,15 +352,15 @@
               </div>
             </div>
           </div>
- 
+
         </div>
- 
+
       </div>
     </section>
- 
+
   </main>
- 
- 
+
+
   <!-- ====================================================
        FOOTER
   ==================================================== -->
@@ -433,7 +368,7 @@
     <div class="container">
       <div class="footer__inner">
         <span class="footer__copy">
-          © 2025 Estudio.Arq — Todos los derechos reservados
+          © 2026 FLEEK studio — Todos los derechos reservados
         </span>
         <ul class="footer__links">
           <li><a href="https://www.instagram.com/fleekestudio/">Instagram</a></li>
@@ -442,8 +377,8 @@
       </div>
     </div>
   </footer>
- 
- 
+
+
   <!-- ====================================================
        SCRIPTS
        Tecnología: JS ES6+ Vanilla (defer = no bloquea render)
@@ -452,7 +387,7 @@
   ==================================================== -->
   <script src="js/hero-slideshow.js" defer></script>
   <script src="js/ui.js" defer></script>
- 
+
 </body>
+
 </html>
- 

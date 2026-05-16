@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   padding-inline: var(--space-6);
-  background: rgba(251, 251, 250, 0.72);
+  background: rgba(10, 10, 10, 0);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid transparent;
@@ -23,8 +23,8 @@
 }
 
 .navbar.scrolled {
-  border-bottom-color: var(--border);
-  background: rgba(251, 251, 250, 0.50);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: rgba(10, 10, 10, 0.233);
 }
 
 /* Dentro de hero (fondo oscuro) */
@@ -56,7 +56,7 @@
 .navbar__logo {
   height: 52px;
   cursor: pointer;
-  background-color: var(--ink); /* Your desired color */
+  background-color: var(--highlight);
   -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
   mask-image: url('../imgs/FLEEK_Completo-01.png');
   -webkit-mask-repeat: no-repeat;
@@ -73,7 +73,7 @@
 }
 
 .navbar.hero-active .navbar__logo {
-  background-color: var(--white); /* Your desired color */
+  background-color: var(--white);
 }
 
 .navbar__logo img {
@@ -92,7 +92,7 @@
 .navbar__link {
   font-size: var(--text-sm);
   font-weight: 400;
-  color: var(--ink-secondary);
+  color: var(--ink-muted);
   letter-spacing: 0.005em;
   transition: color var(--duration-fast);
   position: relative;
@@ -194,6 +194,10 @@
   .navbar__links,
   .navbar__cta {
     display: none;
+  }
+
+  .navbar_logo {
+    width: 154.6;
   }
 
   .navbar__burger {
