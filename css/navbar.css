@@ -110,7 +110,7 @@
 }
 
 .navbar__link:hover {
-  color: var(--ink);
+  color: var(--white);
 }
 
 .navbar__link:hover::after {
