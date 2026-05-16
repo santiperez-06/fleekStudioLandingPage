@@ -584,7 +584,7 @@
 }
 
 .footer__links a:hover {
-  color: var(--ink);
+  color: var(--highlight);
 }
 
 /* ============================================================

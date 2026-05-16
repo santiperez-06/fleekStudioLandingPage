@@ -77,6 +77,10 @@ function initMobileDrawer() {
   // Cerrar al hacer click en un link del drawer
   drawer.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
+      const bars = burger.querySelectorAll('span');
+      bars[0].style.transform = '';
+      bars[1].style.opacity = '';
+      bars[2].style.transform = '';
       open = false;
       drawer.classList.remove('open');
       document.body.style.overflow = '';
