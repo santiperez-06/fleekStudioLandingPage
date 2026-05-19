@@ -249,6 +249,10 @@ p {
 .reveal[data-delay] {
   transition-delay: calc(var(--delay, 0) * 1ms);
 }
+
+::selection {
+  background-color: #EDFF00;
+}
  
 /* --- Responsive breakpoints --- */
 @media (max-width: 768px) {

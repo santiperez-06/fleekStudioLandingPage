@@ -189,14 +189,21 @@
 @media (max-width: 768px) {
   .navbar__links,
   .navbar__cta {
-    display: none;
+    display: none !important;
   }
 
   .navbar_logo {
-    width: 154.6;
+    flex: 1;
   }
 
   .navbar__burger {
+    position: relative;
+    z-index: 110;
+    pointer-events: all;
+    min-width: 44px;
+    min-height: 44px;
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
