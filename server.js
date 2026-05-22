@@ -24,6 +24,8 @@ const app     = express();
 const PORT    = process.env.PORT || 3000;
 const IS_PROD = process.env.NODE_ENV === 'production';
 
+if (IS_PROD) app.set('trust proxy', 1);
+
 /* ---- Validación de variables críticas al arrancar ---- */
 const REQUIRED_ENV = ['JWT_SECRET', 'ADMIN_USER'];
 if (IS_PROD) REQUIRED_ENV.push('ADMIN_PASS_HASH', 'RESEND_API_KEY');
