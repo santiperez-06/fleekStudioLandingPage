@@ -252,6 +252,7 @@ p {
 
 ::selection {
   background-color: #EDFF00;
+  color: var(--ink);
 }
  
 /* --- Responsive breakpoints --- */
