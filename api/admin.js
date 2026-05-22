@@ -1,6 +1,6 @@
 /**
  * FLEEK studio — api/admin.js
- * Tecnología: Node.js — multer, fs/promises
+ * Tecnología: Node.js — multer, fs/promises, @aws-sdk/client-s3 (Cloudflare R2)
  * Scope: CRUD completo de proyectos para el panel de admin.
  */
 
@@ -11,10 +11,18 @@ const fsp    = require('fs/promises');
 const path   = require('path');
 const multer = require('multer');
 const sharp  = require('sharp');
+const { S3Client, PutObjectCommand, DeleteObjectCommand, ListObjectsV2Command, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
 
 const DATA_FILE = path.join(__dirname, '..', 'data', 'proyectos.json');
-const IMGS_DIR  = path.join(__dirname, '..', 'imgs', 'projects');
-const TMP_DIR   = path.join(IMGS_DIR, '_tmp');
+
+const r2 = new S3Client({
+  region: 'auto',
+  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId:     process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+});
 
 /* ---- Helpers de persistencia ---- */
 
@@ -27,24 +35,8 @@ async function writeProyectos(data) {
   await fsp.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
 }
 
-/* ---- Multer ----
-   Siempre escribe en _tmp/ primero.
-   El handler mueve los archivos al destino correcto después
-   de conocer el id del proyecto.
-*/
+/* ---- Multer — memoryStorage (no escribe a disco) ---- */
 function makeUpload(multi = true) {
-  const storage = multer.diskStorage({
-    destination: (_req, _file, cb) => {
-      fs.mkdirSync(TMP_DIR, { recursive: true });
-      cb(null, TMP_DIR);
-    },
-    filename: (_req, file, cb) => {
-      const ext  = path.extname(file.originalname).toLowerCase();
-      const name = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
-      cb(null, name);
-    },
-  });
-
   const filter = (_req, file, cb) => {
     const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
     const ext = path.extname(file.originalname).toLowerCase();
@@ -53,7 +45,7 @@ function makeUpload(multi = true) {
   };
 
   const upload = multer({
-    storage,
+    storage: multer.memoryStorage(),
     fileFilter: filter,
     limits: { fileSize: 50 * 1024 * 1024 },
   });
@@ -71,28 +63,49 @@ function makeUpload(multi = true) {
   };
 }
 
-/* Convertir a AVIF y mover de _tmp/ a imgs/projects/{id}/ */
-async function moveFilesToProject(files, id) {
-  const destDir = path.join(IMGS_DIR, id);
-  fs.mkdirSync(destDir, { recursive: true });
-
-  const paths = [];
+/* Convertir a WebP con sharp y subir a R2 */
+async function uploadFilesToR2(files, id) {
+  const urls = [];
   for (const f of files) {
-    const baseName = path.basename(f.path, path.extname(f.path)) + '.webp';
-    const dest = path.join(destDir, baseName);
-    await sharp(f.path)
+    const baseName = `${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
+    const key = `projects/${id}/${baseName}`;
+    const buffer = await sharp(f.buffer)
       .resize(1920, 1920, { fit: 'inside', withoutEnlargement: true })
       .webp({ quality: 82 })
-      .toFile(dest);
-    await fsp.unlink(f.path);
-    paths.push(`/imgs/projects/${id}/${baseName}`);
+      .toBuffer();
+    await r2.send(new PutObjectCommand({
+      Bucket:      process.env.R2_BUCKET,
+      Key:         key,
+      Body:        buffer,
+      ContentType: 'image/webp',
+    }));
+    urls.push(`${process.env.R2_PUBLIC_URL}/${key}`);
   }
-  return paths;
+  return urls;
 }
 
-/* Limpiar archivos huérfanos en _tmp/ si algo falla */
-function cleanTmp(files = []) {
-  files.forEach(f => { try { fs.unlinkSync(f.path); } catch {} });
+/* Eliminar todos los objetos de R2 con un prefijo dado */
+async function deleteR2Prefix(prefix) {
+  const listed = await r2.send(new ListObjectsV2Command({
+    Bucket: process.env.R2_BUCKET,
+    Prefix: prefix,
+  }));
+  if (!listed.Contents || listed.Contents.length === 0) return;
+  await r2.send(new DeleteObjectsCommand({
+    Bucket: process.env.R2_BUCKET,
+    Delete: { Objects: listed.Contents.map(o => ({ Key: o.Key })) },
+  }));
+}
+
+/* Eliminar un objeto individual de R2 a partir de su URL pública */
+async function deleteR2Object(url) {
+  const base = process.env.R2_PUBLIC_URL + '/';
+  if (!url.startsWith(base)) return;
+  const key = url.slice(base.length);
+  await r2.send(new DeleteObjectCommand({
+    Bucket: process.env.R2_BUCKET,
+    Key:    key,
+  }));
 }
 
 /* ---- Validación de IDs (prevenir path traversal) ---- */
@@ -102,9 +115,9 @@ function isValidId(id) {
 }
 
 function isValidFotoPath(foto) {
-  // Solo permitir rutas dentro de /imgs/projects/
+  const base = process.env.R2_PUBLIC_URL + '/projects/';
   return typeof foto === 'string'
-    && foto.startsWith('/imgs/projects/')
+    && foto.startsWith(base)
     && !foto.includes('..')
     && !foto.includes('\0');
 }
@@ -133,7 +146,6 @@ async function crear(req, res) {
     const destacado   = req.body.destacado === 'true' || req.body.destacado === true;
 
     if (!nombre || !ubicacion || !anio) {
-      cleanTmp(uploadedFiles);
       return res.status(400).json({
         error: 'Faltan campos obligatorios: nombre, ubicacion, año.',
         recibido: { nombre, ubicacion, anio },
@@ -152,9 +164,8 @@ async function crear(req, res) {
     let base = id, n = 2;
     while (proyectos.find(p => p.id === id)) { id = `${base}-${n++}`; }
 
-    // Convertir a AVIF y mover fotos de _tmp/ al directorio del proyecto
     const fotoPaths = uploadedFiles.length > 0
-      ? await moveFilesToProject(uploadedFiles, id)
+      ? await uploadFilesToR2(uploadedFiles, id)
       : [];
 
     const portada = fotoPaths[0] || '';
@@ -176,7 +187,6 @@ async function crear(req, res) {
 
     res.status(201).json(nuevo);
   } catch (err) {
-    cleanTmp(uploadedFiles);
     console.error('[admin.crear]', err);
     res.status(500).json({ error: 'Error al crear proyecto.' });
   }
@@ -218,8 +228,7 @@ async function eliminar(req, res) {
     const idx = proyectos.findIndex(p => p.id === id);
     if (idx === -1) return res.status(404).json({ error: 'Proyecto no encontrado.' });
 
-    const dir = path.join(IMGS_DIR, id);
-    if (fs.existsSync(dir)) fs.rmSync(dir, { recursive: true, force: true });
+    await deleteR2Prefix(`projects/${id}/`);
 
     proyectos.splice(idx, 1);
     await writeProyectos(proyectos);
@@ -236,18 +245,15 @@ async function subirFotos(req, res) {
   const uploadedFiles = req.files || [];
   try {
     const { id } = req.params;
-    if (!isValidId(id)) { cleanTmp(uploadedFiles); return res.status(400).json({ error: 'ID inválido.' }); }
+    if (!isValidId(id)) return res.status(400).json({ error: 'ID inválido.' });
     const proyectos = readProyectos();
     const proyecto = proyectos.find(p => p.id === id);
-    if (!proyecto) {
-      cleanTmp(uploadedFiles);
-      return res.status(404).json({ error: 'Proyecto no encontrado.' });
-    }
+    if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado.' });
     if (uploadedFiles.length === 0) {
       return res.status(400).json({ error: 'No se recibieron archivos.' });
     }
 
-    const nuevasFotos = await moveFilesToProject(uploadedFiles, id);
+    const nuevasFotos = await uploadFilesToR2(uploadedFiles, id);
     proyecto.fotos.push(...nuevasFotos);
 
     if (!proyecto.portada) {
@@ -258,7 +264,6 @@ async function subirFotos(req, res) {
     await writeProyectos(proyectos);
     res.json({ fotos: proyecto.fotos });
   } catch (err) {
-    cleanTmp(uploadedFiles);
     res.status(500).json({ error: 'Error al subir fotos.' });
   }
 }
@@ -277,10 +282,8 @@ async function eliminarFoto(req, res) {
       return res.status(400).json({ error: 'Índice de foto inválido.' });
     }
 
-    const fotoPath = path.join(__dirname, '..', proyecto.fotos[idx]);
-    if (fs.existsSync(fotoPath)) fs.unlinkSync(fotoPath);
-
     const removedSrc = proyecto.fotos[idx];
+    await deleteR2Object(removedSrc);
     proyecto.fotos.splice(idx, 1);
 
     if (proyecto.portada === removedSrc) {

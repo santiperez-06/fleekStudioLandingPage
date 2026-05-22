@@ -47,7 +47,7 @@ app.use(helmet({
       scriptSrc:  ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
       styleSrc:   ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'fonts.gstatic.com'],
       fontSrc:    ["'self'", 'fonts.gstatic.com'],
-      imgSrc:     ["'self'", 'data:', 'blob:', 'picsum.photos'],
+      imgSrc:     ["'self'", 'data:', 'blob:', 'picsum.photos', process.env.R2_PUBLIC_URL].filter(Boolean),
       connectSrc: ["'self'"],
     },
   },
