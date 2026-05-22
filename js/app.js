@@ -192,7 +192,6 @@ function renderProjectsHTML() {
     <section class="section section--surface" id="proyectos" aria-labelledby="projects-title">
       <div class="container">
         <div class="section__header reveal">
-          <p class="section__label">Obra seleccionada</p>
           <h2 class="section__title" id="projects-title">OBRAS SELECCIONADAS</h2>
         </div>
         <div class="projects__grid stagger-group" role="list">
