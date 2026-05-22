@@ -142,7 +142,7 @@ app.get('*', (_req, res) => {
 
 /* ---- Manejador global de errores — no filtrar stack traces ---- */
 app.use((err, _req, res, _next) => {
-  if (!IS_PROD) console.error(err);
+  console.error(err);
   res.status(err.status || 500).json({ error: 'Error interno del servidor.' });
 });
 

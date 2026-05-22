@@ -20,6 +20,7 @@ const JWT_EXPIRES = process.env.JWT_EXPIRES || '8h';
  */
 async function login(req, res) {
   const { username, password } = req.body || {};
+  try {
 
   if (!username || !password) {
     return res.status(400).json({ error: 'Faltan credenciales.' });
@@ -58,6 +59,10 @@ async function login(req, res) {
   });
 
   return res.json({ ok: true, username });
+  } catch (err) {
+    console.error('[login error]', err);
+    return res.status(500).json({ error: 'Error interno.' });
+  }
 }
 
 /**
