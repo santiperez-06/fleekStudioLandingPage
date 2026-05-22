@@ -1,4 +1,14 @@
+# Secretos
 .env
+.env.*
+!.env.example
 
-/node_modules
+# Dependencias
+node_modules/
 
+# Temporales de uploads
+imgs/projects/_tmp/
+
+# OS
+.DS_Store
+Thumbs.db

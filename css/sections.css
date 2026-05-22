@@ -142,35 +142,15 @@
 .projects__grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 480px 360px;
+  grid-auto-rows: 400px;   /* ← filas ilimitadas, altura uniforme */
   gap: 2px;
 }
 
-/* Distribución asimétrica */
-.project-card:nth-child(1) {
-  grid-column: span 7;
-  grid-row: 1;
-}
-
-.project-card:nth-child(2) {
-  grid-column: span 5;
-  grid-row: 1;
-}
-
-.project-card:nth-child(3) {
-  grid-column: span 4;
-  grid-row: 2;
-}
-
-.project-card:nth-child(4) {
-  grid-column: span 4;
-  grid-row: 2;
-}
-
-.project-card:nth-child(5) {
-  grid-column: span 4;
-  grid-row: 2;
-}
+.project-card:nth-child(5n + 1) { grid-column: span 7; }
+.project-card:nth-child(5n + 2) { grid-column: span 5; }
+.project-card:nth-child(5n + 3) { grid-column: span 4; }
+.project-card:nth-child(5n + 4) { grid-column: span 4; }
+.project-card:nth-child(5n + 5) { grid-column: span 4; }
 
 /* Tarjeta */
 .project-card {
