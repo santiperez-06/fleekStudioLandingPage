@@ -27,7 +27,7 @@ const IS_PROD = process.env.NODE_ENV === 'production';
 app.set('trust proxy', 1);
 
 /* ---- Validación de variables críticas al arrancar ---- */
-const REQUIRED_ENV = ['JWT_SECRET', 'ADMIN_USER'];
+const REQUIRED_ENV = ['JWT_SECRET', 'ADMIN_USER', 'DATABASE_URL'];
 if (IS_PROD) REQUIRED_ENV.push('ADMIN_PASS_HASH', 'RESEND_API_KEY');
 if (IS_PROD && !process.env.ALLOWED_ORIGIN) {
   console.warn('  ADVERTENCIA: ALLOWED_ORIGIN no configurado — CORS permitirá cualquier origen.');
@@ -114,13 +114,27 @@ app.post('/api/auth/logout', logout);
 app.get ('/api/auth/me',     me);
 
 /* ---- API proyectos — pública (GET) ---- */
-app.get('/api/proyectos', (_req, res) => {
+app.get('/api/proyectos', async (_req, res) => {
   try {
-    const data = require('fs').readFileSync(
-      path.join(__dirname, 'data', 'proyectos.json'), 'utf-8'
-    );
-    res.json(JSON.parse(data));
-  } catch {
+    const pool = require('./api/db');
+    const { rows } = await pool.query('SELECT * FROM proyectos ORDER BY año DESC, nombre ASC');
+    res.json(rows.map(r => ({
+      id:          r.id,
+      nombre:      r.nombre,
+      ubicacion:   r.ubicacion,
+      año:         r.año,
+      destacado:   r.destacado,
+      descripcion: r.descripcion,
+      portada:     r.portada,
+      heroImg:     r.hero_img,
+      fotos:       r.fotos,
+      tipologia:   r.tipologia,
+      tamaño:      r.tamaño,
+      proyecto:    r.proyecto,
+      fotografia:  r.fotografia,
+    })));
+  } catch (err) {
+    console.error('[GET /api/proyectos]', err);
     res.status(500).json({ error: 'Error al leer proyectos.' });
   }
 });

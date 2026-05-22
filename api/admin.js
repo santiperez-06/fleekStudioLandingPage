@@ -1,19 +1,16 @@
 /**
  * FLEEK studio — api/admin.js
- * Tecnología: Node.js — multer, fs/promises, @aws-sdk/client-s3 (Cloudflare R2)
+ * Tecnología: Node.js — multer, sharp, @aws-sdk/client-s3 (R2), pg (PostgreSQL)
  * Scope: CRUD completo de proyectos para el panel de admin.
  */
 
 'use strict';
 
-const fs     = require('fs');
-const fsp    = require('fs/promises');
 const path   = require('path');
 const multer = require('multer');
 const sharp  = require('sharp');
 const { S3Client, PutObjectCommand, DeleteObjectCommand, ListObjectsV2Command, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
-
-const DATA_FILE = path.join(__dirname, '..', 'data', 'proyectos.json');
+const pool   = require('./db');
 
 const r2 = new S3Client({
   region: 'auto',
@@ -24,15 +21,35 @@ const r2 = new S3Client({
   },
 });
 
-/* ---- Helpers de persistencia ---- */
+/* ---- Helpers de persistencia (DB) ---- */
 
-function readProyectos() {
-  const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-  return JSON.parse(raw);
+async function getProyectos() {
+  const { rows } = await pool.query('SELECT * FROM proyectos ORDER BY año DESC, nombre ASC');
+  return rows.map(dbToProject);
 }
 
-async function writeProyectos(data) {
-  await fsp.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+async function getProyecto(id) {
+  const { rows } = await pool.query('SELECT * FROM proyectos WHERE id = $1', [id]);
+  return rows.length ? dbToProject(rows[0]) : null;
+}
+
+// DB usa snake_case para hero_img; la API expone heroImg
+function dbToProject(row) {
+  return {
+    id:          row.id,
+    nombre:      row.nombre,
+    ubicacion:   row.ubicacion,
+    año:         row.año,
+    destacado:   row.destacado,
+    descripcion: row.descripcion,
+    portada:     row.portada,
+    heroImg:     row.hero_img,
+    fotos:       row.fotos,
+    tipologia:   row.tipologia,
+    tamaño:      row.tamaño,
+    proyecto:    row.proyecto,
+    fotografia:  row.fotografia,
+  };
 }
 
 /* ---- Multer — memoryStorage (no escribe a disco) ---- */
@@ -125,10 +142,11 @@ function isValidFotoPath(foto) {
 /* ---- Rutas ---- */
 
 /** GET /api/admin/proyectos */
-function listar(_req, res) {
+async function listar(_req, res) {
   try {
-    res.json(readProyectos());
-  } catch {
+    res.json(await getProyectos());
+  } catch (err) {
+    console.error('[admin.listar]', err);
     res.status(500).json({ error: 'Error al leer proyectos.' });
   }
 }
@@ -137,13 +155,16 @@ function listar(_req, res) {
 const uploadNuevo = makeUpload(true);
 
 async function crear(req, res) {
-  const uploadedFiles = req.files || [];
   try {
     const nombre      = (req.body.nombre      || '').trim();
     const ubicacion   = (req.body.ubicacion   || '').trim();
     const anio        = (req.body.año         || req.body.anio || '').trim();
     const descripcion = (req.body.descripcion || '').trim();
     const destacado   = req.body.destacado === 'true' || req.body.destacado === true;
+    const tipologia   = (req.body.tipologia   || '').trim();
+    const tamaño      = (req.body.tamaño      || '').trim();
+    const proyecto    = (req.body.proyecto    || '').trim();
+    const fotografia  = (req.body.fotografia  || '').trim();
 
     if (!nombre || !ubicacion || !anio) {
       return res.status(400).json({
@@ -160,32 +181,24 @@ async function crear(req, res) {
       .replace(/^-|-$/g, '');
 
     // Evitar colisiones
-    const proyectos = readProyectos();
+    const existing = await getProyectos();
     let base = id, n = 2;
-    while (proyectos.find(p => p.id === id)) { id = `${base}-${n++}`; }
+    while (existing.find(p => p.id === id)) { id = `${base}-${n++}`; }
 
+    const uploadedFiles = req.files || [];
     const fotoPaths = uploadedFiles.length > 0
       ? await uploadFilesToR2(uploadedFiles, id)
       : [];
 
     const portada = fotoPaths[0] || '';
 
-    const nuevo = {
-      id,
-      nombre,
-      ubicacion,
-      año:        parseInt(anio),
-      destacado,
-      descripcion,
-      portada,
-      heroImg:    portada,
-      fotos:      fotoPaths,
-    };
+    await pool.query(
+      `INSERT INTO proyectos (id, nombre, ubicacion, año, destacado, descripcion, portada, hero_img, fotos, tipologia, tamaño, proyecto, fotografia)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+      [id, nombre, ubicacion, parseInt(anio), destacado, descripcion, portada, portada, fotoPaths, tipologia, tamaño, proyecto, fotografia]
+    );
 
-    proyectos.push(nuevo);
-    await writeProyectos(proyectos);
-
-    res.status(201).json(nuevo);
+    res.status(201).json(await getProyecto(id));
   } catch (err) {
     console.error('[admin.crear]', err);
     res.status(500).json({ error: 'Error al crear proyecto.' });
@@ -197,24 +210,29 @@ async function editar(req, res) {
   try {
     const { id } = req.params;
     if (!isValidId(id)) return res.status(400).json({ error: 'ID inválido.' });
-    const proyectos = readProyectos();
-    const idx = proyectos.findIndex(p => p.id === id);
-    if (idx === -1) return res.status(404).json({ error: 'Proyecto no encontrado.' });
 
-    const { nombre, ubicacion, destacado, descripcion } = req.body;
-    const anio = req.body.año || req.body.anio;
+    const proyecto = await getProyecto(id);
+    if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado.' });
 
-    if (nombre)                   proyectos[idx].nombre      = nombre.trim();
-    if (ubicacion)                proyectos[idx].ubicacion   = ubicacion.trim();
-    if (anio)                     proyectos[idx].año         = parseInt(anio);
-    if (descripcion !== undefined) proyectos[idx].descripcion = descripcion.trim();
-    if (destacado !== undefined) {
-      proyectos[idx].destacado = destacado === 'true' || destacado === true;
-    }
+    const nombre      = req.body.nombre      !== undefined ? req.body.nombre.trim()      : proyecto.nombre;
+    const ubicacion   = req.body.ubicacion   !== undefined ? req.body.ubicacion.trim()   : proyecto.ubicacion;
+    const anio        = req.body.año || req.body.anio      ? parseInt(req.body.año || req.body.anio) : proyecto.año;
+    const descripcion = req.body.descripcion !== undefined ? req.body.descripcion.trim() : proyecto.descripcion;
+    const destacado   = req.body.destacado   !== undefined ? (req.body.destacado === 'true' || req.body.destacado === true) : proyecto.destacado;
+    const tipologia   = req.body.tipologia   !== undefined ? req.body.tipologia.trim()   : proyecto.tipologia;
+    const tamaño      = req.body.tamaño      !== undefined ? req.body.tamaño.trim()      : proyecto.tamaño;
+    const proyectoVal = req.body.proyecto    !== undefined ? req.body.proyecto.trim()    : proyecto.proyecto;
+    const fotografia  = req.body.fotografia  !== undefined ? req.body.fotografia.trim()  : proyecto.fotografia;
 
-    await writeProyectos(proyectos);
-    res.json(proyectos[idx]);
+    await pool.query(
+      `UPDATE proyectos SET nombre=$1, ubicacion=$2, año=$3, descripcion=$4, destacado=$5,
+       tipologia=$6, tamaño=$7, proyecto=$8, fotografia=$9 WHERE id=$10`,
+      [nombre, ubicacion, anio, descripcion, destacado, tipologia, tamaño, proyectoVal, fotografia, id]
+    );
+
+    res.json(await getProyecto(id));
   } catch (err) {
+    console.error('[admin.editar]', err);
     res.status(500).json({ error: 'Error al editar proyecto.' });
   }
 }
@@ -224,16 +242,16 @@ async function eliminar(req, res) {
   try {
     const { id } = req.params;
     if (!isValidId(id)) return res.status(400).json({ error: 'ID inválido.' });
-    const proyectos = readProyectos();
-    const idx = proyectos.findIndex(p => p.id === id);
-    if (idx === -1) return res.status(404).json({ error: 'Proyecto no encontrado.' });
+
+    const proyecto = await getProyecto(id);
+    if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado.' });
 
     await deleteR2Prefix(`projects/${id}/`);
+    await pool.query('DELETE FROM proyectos WHERE id = $1', [id]);
 
-    proyectos.splice(idx, 1);
-    await writeProyectos(proyectos);
     res.json({ ok: true });
   } catch (err) {
+    console.error('[admin.eliminar]', err);
     res.status(500).json({ error: 'Error al eliminar proyecto.' });
   }
 }
@@ -242,28 +260,31 @@ async function eliminar(req, res) {
 const uploadFotos = makeUpload(true);
 
 async function subirFotos(req, res) {
-  const uploadedFiles = req.files || [];
   try {
     const { id } = req.params;
     if (!isValidId(id)) return res.status(400).json({ error: 'ID inválido.' });
-    const proyectos = readProyectos();
-    const proyecto = proyectos.find(p => p.id === id);
+
+    const proyecto = await getProyecto(id);
     if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado.' });
+
+    const uploadedFiles = req.files || [];
     if (uploadedFiles.length === 0) {
       return res.status(400).json({ error: 'No se recibieron archivos.' });
     }
 
     const nuevasFotos = await uploadFilesToR2(uploadedFiles, id);
-    proyecto.fotos.push(...nuevasFotos);
+    const fotos = [...proyecto.fotos, ...nuevasFotos];
+    const portada = proyecto.portada || fotos[0] || '';
+    const heroImg = proyecto.heroImg || fotos[0] || '';
 
-    if (!proyecto.portada) {
-      proyecto.portada = proyecto.fotos[0];
-      proyecto.heroImg = proyecto.fotos[0];
-    }
+    await pool.query(
+      'UPDATE proyectos SET fotos=$1, portada=$2, hero_img=$3 WHERE id=$4',
+      [fotos, portada, heroImg, id]
+    );
 
-    await writeProyectos(proyectos);
-    res.json({ fotos: proyecto.fotos });
+    res.json({ fotos });
   } catch (err) {
+    console.error('[admin.subirFotos]', err);
     res.status(500).json({ error: 'Error al subir fotos.' });
   }
 }
@@ -275,8 +296,8 @@ async function eliminarFoto(req, res) {
     if (!isValidId(id)) return res.status(400).json({ error: 'ID inválido.' });
     const idx = parseInt(index);
     if (isNaN(idx)) return res.status(400).json({ error: 'Índice inválido.' });
-    const proyectos = readProyectos();
-    const proyecto = proyectos.find(p => p.id === id);
+
+    const proyecto = await getProyecto(id);
     if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado.' });
     if (idx < 0 || idx >= proyecto.fotos.length) {
       return res.status(400).json({ error: 'Índice de foto inválido.' });
@@ -284,16 +305,23 @@ async function eliminarFoto(req, res) {
 
     const removedSrc = proyecto.fotos[idx];
     await deleteR2Object(removedSrc);
-    proyecto.fotos.splice(idx, 1);
 
-    if (proyecto.portada === removedSrc) {
-      proyecto.portada = proyecto.fotos[0] || '';
-      proyecto.heroImg = proyecto.portada;
-    }
+    const fotos = [...proyecto.fotos];
+    fotos.splice(idx, 1);
 
-    await writeProyectos(proyectos);
-    res.json({ fotos: proyecto.fotos });
+    let portada = proyecto.portada;
+    let heroImg = proyecto.heroImg;
+    if (portada === removedSrc) portada = fotos[0] || '';
+    if (heroImg === removedSrc) heroImg = fotos[0] || '';
+
+    await pool.query(
+      'UPDATE proyectos SET fotos=$1, portada=$2, hero_img=$3 WHERE id=$4',
+      [fotos, portada, heroImg, id]
+    );
+
+    res.json({ fotos });
   } catch (err) {
+    console.error('[admin.eliminarFoto]', err);
     res.status(500).json({ error: 'Error al eliminar foto.' });
   }
 }
@@ -303,22 +331,23 @@ async function reordenarFotos(req, res) {
   try {
     const { id } = req.params;
     if (!isValidId(id)) return res.status(400).json({ error: 'ID inválido.' });
-    const { fotos } = req.body;
-    const proyectos = readProyectos();
-    const proyecto = proyectos.find(p => p.id === id);
+
+    const proyecto = await getProyecto(id);
     if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado.' });
+
+    const { fotos } = req.body;
     if (!Array.isArray(fotos)) return res.status(400).json({ error: 'fotos debe ser un array.' });
 
-    // Validar que solo se reordenen fotos ya existentes en el proyecto
     const existentes = new Set(proyecto.fotos);
     if (!fotos.every(f => isValidFotoPath(f) && existentes.has(f))) {
       return res.status(400).json({ error: 'Lista de fotos contiene rutas inválidas.' });
     }
 
-    proyecto.fotos = fotos;
-    await writeProyectos(proyectos);
-    res.json({ fotos: proyecto.fotos });
+    await pool.query('UPDATE proyectos SET fotos=$1 WHERE id=$2', [fotos, id]);
+
+    res.json({ fotos });
   } catch (err) {
+    console.error('[admin.reordenarFotos]', err);
     res.status(500).json({ error: 'Error al reordenar fotos.' });
   }
 }
@@ -328,12 +357,12 @@ async function cambiarPortada(req, res) {
   try {
     const { id } = req.params;
     if (!isValidId(id)) return res.status(400).json({ error: 'ID inválido.' });
-    const { portada, heroImg } = req.body;
-    const proyectos = readProyectos();
-    const proyecto = proyectos.find(p => p.id === id);
+
+    const proyecto = await getProyecto(id);
     if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado.' });
 
-    // Validar que los paths pertenezcan a las fotos del proyecto
+    const { portada, heroImg } = req.body;
+
     if (portada && (!isValidFotoPath(portada) || !proyecto.fotos.includes(portada))) {
       return res.status(400).json({ error: 'Ruta de portada inválida.' });
     }
@@ -341,12 +370,17 @@ async function cambiarPortada(req, res) {
       return res.status(400).json({ error: 'Ruta de heroImg inválida.' });
     }
 
-    if (portada) proyecto.portada = portada;
-    if (heroImg) proyecto.heroImg = heroImg;
+    const newPortada = portada || proyecto.portada;
+    const newHeroImg = heroImg || proyecto.heroImg;
 
-    await writeProyectos(proyectos);
-    res.json({ portada: proyecto.portada, heroImg: proyecto.heroImg });
+    await pool.query(
+      'UPDATE proyectos SET portada=$1, hero_img=$2 WHERE id=$3',
+      [newPortada, newHeroImg, id]
+    );
+
+    res.json({ portada: newPortada, heroImg: newHeroImg });
   } catch (err) {
+    console.error('[admin.cambiarPortada]', err);
     res.status(500).json({ error: 'Error al cambiar portada.' });
   }
 }
