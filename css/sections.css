@@ -28,6 +28,7 @@
 }
 
 .section__label {
+  display: none;
   font-family: var(--font-sans);
   font-size: var(--text-xs);
   letter-spacing: 0.12em;
@@ -61,6 +62,7 @@
   letter-spacing: -0.03em;
   line-height: 1.1;
   color: var(--white);
+  text-transform: uppercase;
 }
 
 .section--dark .section__title {

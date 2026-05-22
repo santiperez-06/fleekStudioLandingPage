@@ -165,15 +165,6 @@ function renderHeroHTML() {
       <div class="hero__indicators" role="tablist" aria-label="Navegar proyectos">${dots}</div>
       <div class="hero__progress" aria-hidden="true"></div>
       <div class="hero__content">
-        <div class="hero__meta">
-          <a href="/#proyectos" class="hero__meta-link">
-            Ver proyectos
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4"/>
-            </svg>
-          </a>
-          <a href="/#contacto" class="hero__meta-link">Conocer el estudio</a>
-        </div>
       </div>
     </section>
   `;
@@ -202,7 +193,7 @@ function renderProjectsHTML() {
       <div class="container">
         <div class="section__header reveal">
           <p class="section__label">Obra seleccionada</p>
-          <h2 class="section__title" id="projects-title">Proyectos</h2>
+          <h2 class="section__title" id="projects-title">OBRAS SELECCIONADAS</h2>
         </div>
         <div class="projects__grid stagger-group" role="list">
           ${cards}
