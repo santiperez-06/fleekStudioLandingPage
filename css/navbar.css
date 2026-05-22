@@ -18,17 +18,6 @@
               background var(--duration-base) var(--ease-standard);
 }
 
-.navbar.scrolled {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-  background: rgba(10, 10, 10, 0.233);
-}
-
-/* Dentro de hero (fondo oscuro) */
-.navbar.hero-active {
-  background: rgba(10, 10, 10, 0);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
 .navbar.hero-active .navbar__logo,
 .navbar.hero-active .navbar__link {
   color: rgba(255, 255, 255, 0.88);
@@ -53,8 +42,8 @@
   height: 52px;
   cursor: pointer;
   background-color: var(--highlight);
-  -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
-  mask-image: url('../imgs/FLEEK_Completo-01.png');
+  -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  mask-image: url('../imgs/FLEEK_Isologo-09.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   mask-size: contain;
