@@ -168,7 +168,7 @@
 .navbar__drawer .navbar__link {
   font-size: var(--text-2xl);
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: bold;
   color: var(--ink);
 }
 
