@@ -243,11 +243,10 @@ function renderContactHTML() {
           </form>
           <div class="contact__info reveal" data-delay="100">
             <div class="contact__detail">
-              <div class="contact__detail-label">Teléfono</div>
+              <div class="contact__detail-label">Teléfonos</div>
               <div class="contact__detail-value">
                 <a href="tel:+541148000000">+54 11 4800-0000</a>
               </div>
-              <div class="contact__detail-label">Teléfono</div>
               <div class="contact__detail-value">
                 <a href="tel:+541148000000">+54 11 4800-0000</a>
               </div>
