@@ -9,6 +9,8 @@
 const path   = require('path');
 const multer = require('multer');
 const sharp  = require('sharp');
+sharp.cache(false);      // evitar que libvips acumule memoria entre requests
+sharp.concurrency(1);   // una sola imagen procesada a la vez
 const { S3Client, PutObjectCommand, DeleteObjectCommand, ListObjectsV2Command, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
 const pool   = require('./db');
 

@@ -656,12 +656,12 @@ async function saveProyecto() {
       proyectoId = AdminState.editingId;
     }
 
-    // 2. Subir fotos en lotes de 5
+    // 2. Subir fotos de a 1 para evitar OOM en Railway
     if (pendingFiles.length > 0) {
-      const BATCH = 5;
+      const BATCH = 1;
       for (let i = 0; i < pendingFiles.length; i += BATCH) {
         const lote = pendingFiles.slice(i, i + BATCH);
-        btn.textContent = `Subiendo fotos ${i + 1}–${Math.min(i + BATCH, pendingFiles.length)} de ${pendingFiles.length}…`;
+        btn.textContent = `Subiendo foto ${i + 1} de ${pendingFiles.length}…`;
         const fd = new FormData();
         lote.forEach(f => fd.append('fotos', f));
         await apiFetch(`/api/admin/proyectos/${proyectoId}/fotos`, { method: 'POST', body: fd });
