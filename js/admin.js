@@ -629,46 +629,53 @@ async function saveProyecto() {
   }
 
   btn.disabled = true;
-  btn.textContent = 'Guardando…';
 
   try {
+    let proyectoId;
+
     if (AdminState.drawerMode === 'nuevo') {
-      // Crear con FormData (incluye fotos)
+      // 1. Crear proyecto sin fotos
+      btn.textContent = 'Creando proyecto…';
       const fd = new FormData();
       fd.append('nombre',      nombre);
       fd.append('ubicacion',   ubicacion);
       fd.append('anio',        año);
       fd.append('destacado',   destacado);
       fd.append('descripcion', descripcion);
-      pendingFiles.forEach(f => fd.append('fotos', f));
-
       const nuevo = await apiFetch('/api/admin/proyectos', { method: 'POST', body: fd });
       AdminState.proyectos.push(nuevo);
-      toast(`Proyecto "${nuevo.nombre}" creado`);
-
+      proyectoId = nuevo.id;
     } else {
       // Editar datos
+      btn.textContent = 'Guardando…';
       await apiFetch(`/api/admin/proyectos/${AdminState.editingId}`, {
         method:  'PUT',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ nombre, ubicacion, anio: año, destacado, descripcion }),
       });
-
-      // Subir fotos nuevas si hay
-      if (pendingFiles.length > 0) {
-        const fd = new FormData();
-        pendingFiles.forEach(f => fd.append('fotos', f));
-        await apiFetch(`/api/admin/proyectos/${AdminState.editingId}/fotos`, {
-          method: 'POST', body: fd,
-        });
-      }
-
-      // Refrescar datos locales
-      const updated = await apiFetch('/api/admin/proyectos');
-      AdminState.proyectos = updated;
-      toast(`Proyecto actualizado`);
+      proyectoId = AdminState.editingId;
     }
 
+    // 2. Subir fotos en lotes de 5
+    if (pendingFiles.length > 0) {
+      const BATCH = 5;
+      for (let i = 0; i < pendingFiles.length; i += BATCH) {
+        const lote = pendingFiles.slice(i, i + BATCH);
+        btn.textContent = `Subiendo fotos ${i + 1}–${Math.min(i + BATCH, pendingFiles.length)} de ${pendingFiles.length}…`;
+        const fd = new FormData();
+        lote.forEach(f => fd.append('fotos', f));
+        await apiFetch(`/api/admin/proyectos/${proyectoId}/fotos`, { method: 'POST', body: fd });
+      }
+    }
+
+    // 3. Refrescar datos locales
+    const updated = await apiFetch('/api/admin/proyectos');
+    AdminState.proyectos = updated;
+
+    toast(AdminState.drawerMode === 'nuevo'
+      ? `Proyecto "${nombre}" creado`
+      : 'Proyecto actualizado'
+    );
     renderProjectsList();
     closeDrawer();
 
