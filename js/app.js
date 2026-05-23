@@ -181,7 +181,7 @@ function renderProjectsHTML() {
         <div class="project-card__overlay" aria-hidden="true"></div>
         <div class="project-card__info">
           <div class="project-card__name">${p.nombre}</div>
-          <div class="project-card__year">${p.año}</div>
+          <div class="project-card__year">${p.ubicacion} - ${p.año}</div>
         </div>
         <a href="/proyectos/${p.id}" class="project-card__link" aria-label="Ver proyecto ${p.nombre}"></a>
       </article>
