@@ -205,7 +205,7 @@ function renderProjectsHTML() {
           <div class="project-card__name">${p.nombre}</div>
           <div class="project-card__year">${p.ubicacion} - ${p.año}</div>
         </div>
-        <a href="/proyectos/${p.id}" class="project-card__link" aria-label="Ver proyecto ${p.nombre}"></a>
+        <a href="/obras/${p.id}" class="project-card__link" aria-label="Ver proyecto ${p.nombre}"></a>
       </article>
     `;
   }).join('');
@@ -296,7 +296,7 @@ function renderProyectoHeaderHTML(p) {
         <div class="project-header__inner">
           <div>
             <div class="project-header__eyebrow reveal">
-              <a href="/#proyectos">Proyectos</a>
+              <a href="/#proyectos">Obras</a>
               <span>›</span>
               <span>${p.nombre}</span>
             </div>
@@ -466,7 +466,7 @@ function initModules({ hero, lightbox }) {
 document.addEventListener('DOMContentLoaded', () => {
   Router.on('/',              renderHome);
   Router.on('/contacto',      renderContacto);
-  Router.on('/proyectos/:id', renderProyecto);
+  Router.on('/obras/:id', renderProyecto);
   Router.on('/admin',         () => {
     // Ocultar navbar en el panel de admin
     document.querySelector('.navbar')?.style.setProperty('display', 'none');
