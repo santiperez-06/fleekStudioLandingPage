@@ -59,7 +59,6 @@ async function renderHome(_params, hash) {
     ${renderHeroHTML()}
     <main id="main-content">
       ${renderProjectsHTML()}
-      ${renderContactHTML()}
     </main>
     ${renderFooterHTML()}
   `;
@@ -74,6 +73,29 @@ async function renderHome(_params, hash) {
   }
 
   initModules({ hero: true, lightbox: false });
+}
+
+/* ============================================================
+   VISTA: CONTACTO
+   ============================================================ */
+
+async function renderContacto() {
+  document.querySelector('.navbar')?.style.removeProperty('display');
+  document.querySelector('.navbar__drawer')?.style.removeProperty('display');
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <main id="main-content">
+      ${renderContactHTML()}
+    </main>
+    ${renderFooterHTML()}
+  `;
+
+  document.title = 'Contacto — FLEEK studio';
+  scrollToTop();
+  initModules({ hero: false, lightbox: false });
+  document.querySelector('.navbar')?.classList.add('scrolled');
+  document.querySelector('.navbar')?.classList.remove('hero-active');
 }
 
 /* ============================================================
@@ -444,6 +466,7 @@ function initModules({ hero, lightbox }) {
 
 document.addEventListener('DOMContentLoaded', () => {
   Router.on('/',              renderHome);
+  Router.on('/contacto',      renderContacto);
   Router.on('/proyectos/:id', renderProyecto);
   Router.on('/admin',         () => {
     // Ocultar navbar en el panel de admin
