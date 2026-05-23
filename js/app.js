@@ -229,7 +229,6 @@ function renderContactHTML() {
     <section class="section" id="contacto" aria-labelledby="contact-title">
       <div class="container">
         <div class="section__header reveal">
-          <p class="section__label">Hablemos</p>
           <h2 class="section__title" id="contact-title">
             ¿Tenés un<br/>proyecto en mente?
           </h2>
