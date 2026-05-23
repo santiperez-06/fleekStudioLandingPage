@@ -81,6 +81,7 @@
   letter-spacing: 0.005em;
   transition: color var(--duration-fast);
   position: relative;
+  text-transform: uppercase;
 }
 
 .navbar__link::after {
