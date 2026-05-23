@@ -32,8 +32,6 @@ async function fetchProyectos() {
   }
 }
 
-/** Patrón cíclico de columnas para el grid — se repite indefinidamente */
-const PATRON_COLUMNAS = ['span-7', 'span-5', 'span-4', 'span-4', 'span-4', 'span-5', 'span-7'];
 
 /** Patrón de filas para el mosaico de detalle */
 const PATRON_FILAS    = ['full', '2-1', 'thirds', '1-2', 'half'];
@@ -193,10 +191,9 @@ function renderHeroHTML() {
 }
 
 function renderProjectsHTML() {
-  const cards = PROYECTOS.map((p, i) => {
-    const colClass = PATRON_COLUMNAS[i % PATRON_COLUMNAS.length];
+  const cards = PROYECTOS.map((p) => {
     return `
-      <article class="project-card ${colClass} stagger-item reveal" role="listitem">
+      <article class="project-card stagger-item reveal" role="listitem">
         <div class="project-card__image">
           <img src="${p.portada}" alt="${p.nombre}" loading="lazy" />
         </div>
@@ -211,7 +208,7 @@ function renderProjectsHTML() {
   }).join('');
 
   return `
-    <section class="section section--surface" id="proyectos" aria-labelledby="projects-title">
+    <section class="section section--surface" id="obras" aria-labelledby="projects-title">
       <div class="container">
         <div class="section__header reveal">
           <h2 class="section__title" id="projects-title">OBRAS SELECCIONADAS</h2>
@@ -296,7 +293,7 @@ function renderProyectoHeaderHTML(p) {
         <div class="project-header__inner">
           <div>
             <div class="project-header__eyebrow reveal">
-              <a href="/#proyectos">Obras</a>
+              <a href="/#obras">Obras</a>
               <span>›</span>
               <span>${p.nombre}</span>
             </div>
@@ -404,7 +401,7 @@ function renderLightboxHTML() {
 
 function renderProyectoNavHTML(prev, next) {
   const prevHTML = prev ? `
-    <a href="/proyectos/${prev.id}" class="project-nav__item project-nav__item--prev">
+    <a href="/obras/${prev.id}" class="project-nav__item project-nav__item--prev">
       <span class="project-nav__label">Anterior</span>
       <span class="project-nav__name">${prev.nombre}</span>
       <span class="project-nav__location">${prev.ubicacion}</span>
@@ -412,7 +409,7 @@ function renderProyectoNavHTML(prev, next) {
   ` : '<div></div>';
 
   const nextHTML = next ? `
-    <a href="/proyectos/${next.id}" class="project-nav__item project-nav__item--next">
+    <a href="/obras/${next.id}" class="project-nav__item project-nav__item--next">
       <span class="project-nav__label">Siguiente</span>
       <span class="project-nav__name">${next.nombre}</span>
       <span class="project-nav__location">${next.ubicacion}</span>
