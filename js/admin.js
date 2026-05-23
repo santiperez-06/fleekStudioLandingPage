@@ -394,6 +394,22 @@ function renderDrawerBody(proyecto = null) {
         <textarea id="f-descripcion" rows="4" placeholder="Descripción del proyecto…">${proyecto?.descripcion || ''}</textarea>
       </div>
 
+      <div class="admin-form-row">
+        <div class="form-field">
+          <label for="f-tipologia">Tipología</label>
+          <input type="text" id="f-tipologia" placeholder="Residencial" value="${proyecto?.tipologia || ''}" />
+        </div>
+        <div class="form-field">
+          <label for="f-tamaño">Tamaño</label>
+          <input type="text" id="f-tamaño" placeholder="120 m²" value="${proyecto?.tamaño || ''}" />
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="f-proyecto">Proyecto</label>
+        <input type="text" id="f-proyecto" placeholder="Nombre del proyectista" value="${proyecto?.proyecto || ''}" />
+      </div>
+
       <label class="admin-toggle">
         <input type="checkbox" id="f-destacado" ${proyecto?.destacado ? 'checked' : ''} />
         <div class="admin-toggle__track"><div class="admin-toggle__thumb"></div></div>
@@ -620,6 +636,9 @@ async function saveProyecto() {
   const año         = document.getElementById('f-año')?.value;
   const destacado   = document.getElementById('f-destacado')?.checked;
   const descripcion = document.getElementById('f-descripcion')?.value.trim();
+  const tipologia   = document.getElementById('f-tipologia')?.value.trim();
+  const tamaño      = document.getElementById('f-tamaño')?.value.trim();
+  const proyecto    = document.getElementById('f-proyecto')?.value.trim();
   const dropzone  = document.getElementById('dropzone');
   const pendingFiles = dropzone?._pendingFiles || [];
 
@@ -642,6 +661,9 @@ async function saveProyecto() {
       fd.append('anio',        año);
       fd.append('destacado',   destacado);
       fd.append('descripcion', descripcion);
+      fd.append('tipologia',   tipologia);
+      fd.append('tamaño',      tamaño);
+      fd.append('proyecto',    proyecto);
       const nuevo = await apiFetch('/api/admin/proyectos', { method: 'POST', body: fd });
       AdminState.proyectos.push(nuevo);
       proyectoId = nuevo.id;
@@ -651,7 +673,7 @@ async function saveProyecto() {
       await apiFetch(`/api/admin/proyectos/${AdminState.editingId}`, {
         method:  'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ nombre, ubicacion, anio: año, destacado, descripcion }),
+        body:    JSON.stringify({ nombre, ubicacion, anio: año, destacado, descripcion, tipologia, tamaño, proyecto }),
       });
       proyectoId = AdminState.editingId;
     }
