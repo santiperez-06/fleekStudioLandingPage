@@ -290,6 +290,18 @@ function renderProyectoHeaderHTML(p) {
               <div class="project-meta-item__label">Año</div>
               <div class="project-meta-item__value">${p.año}</div>
             </div>
+            <div class="project-meta-item">
+              <div class="project-meta-item__label">Tipología</div>
+              <div class="project-meta-item__value">${p.tipologia}</div>
+            </div>
+            <div class="project-meta-item">
+              <div class="project-meta-item__label">Tamaño</div>
+              <div class="project-meta-item__value">${p.tamaño}</div>
+            </div>
+            <div class="project-meta-item">
+              <div class="project-meta-item__label">Fotografia y Edición</div>
+              <div class="project-meta-item__value">${p.fotografia}</div>
+            </div>
           </div>
           ${p.descripcion ? `<p class="project-header__description reveal" data-delay="220">${p.descripcion}</p>` : ''}
         </div>
