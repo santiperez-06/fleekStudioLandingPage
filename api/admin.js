@@ -52,8 +52,26 @@ function dbToProject(row) {
   };
 }
 
-/* ---- Multer — memoryStorage (no escribe a disco) ---- */
+const fs  = require('fs');
+const fsp = require('fs/promises');
+const os  = require('os');
+
+const TMP_DIR = path.join(os.tmpdir(), 'fleek-uploads');
+
+/* ---- Multer — diskStorage en /tmp para no saturar RAM ---- */
 function makeUpload(multi = true) {
+  const storage = multer.diskStorage({
+    destination: (_req, _file, cb) => {
+      fs.mkdirSync(TMP_DIR, { recursive: true });
+      cb(null, TMP_DIR);
+    },
+    filename: (_req, file, cb) => {
+      const ext  = path.extname(file.originalname).toLowerCase();
+      const name = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
+      cb(null, name);
+    },
+  });
+
   const filter = (_req, file, cb) => {
     const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
     const ext = path.extname(file.originalname).toLowerCase();
@@ -62,7 +80,7 @@ function makeUpload(multi = true) {
   };
 
   const upload = multer({
-    storage: multer.memoryStorage(),
+    storage,
     fileFilter: filter,
     limits: { fileSize: 50 * 1024 * 1024 },
   });
@@ -80,16 +98,22 @@ function makeUpload(multi = true) {
   };
 }
 
-/* Convertir a WebP con sharp y subir a R2 */
+/* Limpiar archivos temporales si algo falla */
+function cleanTmp(files = []) {
+  files.forEach(f => { try { fs.unlinkSync(f.path); } catch {} });
+}
+
+/* Convertir a WebP con sharp (desde disco) y subir a R2, luego borrar tmp */
 async function uploadFilesToR2(files, id) {
   const urls = [];
   for (const f of files) {
     const baseName = `${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
     const key = `projects/${id}/${baseName}`;
-    const buffer = await sharp(f.buffer)
+    const buffer = await sharp(f.path)
       .resize(1920, 1920, { fit: 'inside', withoutEnlargement: true })
       .webp({ quality: 82 })
       .toBuffer();
+    await fsp.unlink(f.path);
     await r2.send(new PutObjectCommand({
       Bucket:      process.env.R2_BUCKET,
       Key:         key,
@@ -200,6 +224,7 @@ async function crear(req, res) {
 
     res.status(201).json(await getProyecto(id));
   } catch (err) {
+    cleanTmp(req.files || []);
     console.error('[admin.crear]', err);
     res.status(500).json({ error: 'Error al crear proyecto.' });
   }
@@ -284,6 +309,7 @@ async function subirFotos(req, res) {
 
     res.json({ fotos });
   } catch (err) {
+    cleanTmp(req.files || []);
     console.error('[admin.subirFotos]', err);
     res.status(500).json({ error: 'Error al subir fotos.' });
   }
