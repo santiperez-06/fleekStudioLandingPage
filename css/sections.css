@@ -261,6 +261,7 @@
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.5);
   margin-top: var(--space-1);
+  text-transform: uppercase;
 }
 
 /* El <a> cubre toda la tarjeta */
