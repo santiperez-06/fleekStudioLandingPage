@@ -476,7 +476,7 @@ function renderPhotoItems(proyecto) {
     <div class="admin-photo-item" draggable="true" data-index="${i}" data-src="${src}">
       <img src="${src}" alt="Foto ${i + 1}" onerror="this.style.opacity=0.3" />
       <div class="admin-photo-item__order">${i + 1}</div>
-      ${i === 0 || src === proyecto.portada ? '<div class="admin-photo-item__portada">Portada</div>' : ''}
+      ${src === proyecto.portada ? '<div class="admin-photo-item__portada">Portada</div>' : ''}
       <div class="admin-photo-item__actions">
         <button class="admin-photo-btn btn-set-portada" data-src="${src}" title="Usar como portada">
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
