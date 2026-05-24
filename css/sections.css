@@ -725,7 +725,7 @@
   align-items: center;
   gap: var(--space-3);
   font-family: var(--font-serif);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: 700;
   color: var(--white);
   letter-spacing: -0.02em;
@@ -736,7 +736,7 @@
 .about-page__tagline-logo {
   display: inline-block;
   width: 120px;
-  height: var(--text-xl);
+  height: var(--text-2xl);
   background-color: var(--highlight);
   -webkit-mask-image: url('../imgs/FLEEK_Logo-05.png');
   mask-image: url('../imgs/FLEEK_Logo-05.png');
