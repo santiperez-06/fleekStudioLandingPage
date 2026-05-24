@@ -563,8 +563,8 @@
 }
 
 .footer__logo {
-  height: 56px;
-  width: 220px;
+  height: 72px;
+  width: 280px;
   background-color: var(--white);
   -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
   mask-image: url('../imgs/FLEEK_Completo-01.png');
@@ -574,20 +574,34 @@
   flex-shrink: 0;
 }
 
-.footer__contact {
+.footer__cols {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  gap: var(--space-12);
 }
 
-.footer__contact a {
-  font-size: var(--text-sm);
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.footer__col-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--ink-muted);
+  margin-bottom: var(--space-1);
+}
+
+.footer__col a {
+  font-size: var(--text-sm);
+  color: var(--white);
   letter-spacing: 0.02em;
   transition: color var(--duration-fast);
 }
 
-.footer__contact a:hover {
+.footer__col a:hover {
   color: var(--highlight);
 }
 

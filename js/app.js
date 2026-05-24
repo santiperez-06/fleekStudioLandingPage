@@ -401,9 +401,15 @@ function renderFooterHTML() {
         <div class="footer__inner">
           <div class="footer__brand">
             <div class="footer__logo"></div>
-            <div class="footer__contact">
-              <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
-              <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener">INSTAGRAM</a>
+            <div class="footer__cols">
+              <div class="footer__col">
+                <span class="footer__col-title">Contacto</span>
+                <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
+              </div>
+              <div class="footer__col">
+                <span class="footer__col-title">Social</span>
+                <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener">Instagram</a>
+              </div>
             </div>
           </div>
         </div>
