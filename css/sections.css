@@ -671,7 +671,7 @@
    NOSOTROS — página standalone
    ============================================================ */
 .about-page__img {
-  width: 55%;
+  width: 65%;
   display: block;
   filter: grayscale(100%);
 }
@@ -687,7 +687,7 @@
   grid-template-columns: 280px 1fr;
   max-width: 1400px;
   margin: 0 auto;
-  padding-right: var(--space-16);
+  padding-right: var(--space-6);
 }
 
 .about-page__logo-col {
@@ -715,7 +715,7 @@
 }
 
 .about-page__text {
-  font-size: var(--text-2xl);
+  font-size: var(--text-lg);
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.8;
 }
