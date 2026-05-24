@@ -405,9 +405,15 @@ function renderDrawerBody(proyecto = null) {
         </div>
       </div>
 
-      <div class="form-field">
-        <label for="f-proyecto">Proyecto</label>
-        <input type="text" id="f-proyecto" placeholder="Nombre del proyectista" value="${proyecto?.proyecto || ''}" />
+      <div class="admin-form-row">
+        <div class="form-field">
+          <label for="f-proyecto">Proyecto</label>
+          <input type="text" id="f-proyecto" placeholder="Nombre del proyectista" value="${proyecto?.proyecto || ''}" />
+        </div>
+        <div class="form-field">
+          <label for="f-fotografia">Fotografía</label>
+          <input type="text" id="f-fotografia" placeholder="Nombre del fotógrafo" value="${proyecto?.fotografia || ''}" />
+        </div>
       </div>
 
       <label class="admin-toggle">
@@ -639,6 +645,7 @@ async function saveProyecto() {
   const tipologia   = document.getElementById('f-tipologia')?.value.trim();
   const tamaño      = document.getElementById('f-tamaño')?.value.trim();
   const proyecto    = document.getElementById('f-proyecto')?.value.trim();
+  const fotografia  = document.getElementById('f-fotografia')?.value.trim();
   const dropzone  = document.getElementById('dropzone');
   const pendingFiles = dropzone?._pendingFiles || [];
 
@@ -664,6 +671,7 @@ async function saveProyecto() {
       fd.append('tipologia',   tipologia);
       fd.append('tamaño',      tamaño);
       fd.append('proyecto',    proyecto);
+      fd.append('fotografia',  fotografia);
       const nuevo = await apiFetch('/api/admin/proyectos', { method: 'POST', body: fd });
       AdminState.proyectos.push(nuevo);
       proyectoId = nuevo.id;
@@ -673,7 +681,7 @@ async function saveProyecto() {
       await apiFetch(`/api/admin/proyectos/${AdminState.editingId}`, {
         method:  'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ nombre, ubicacion, anio: año, destacado, descripcion, tipologia, tamaño, proyecto }),
+        body:    JSON.stringify({ nombre, ubicacion, anio: año, destacado, descripcion, tipologia, tamaño, proyecto, fotografia }),
       });
       proyectoId = AdminState.editingId;
     }

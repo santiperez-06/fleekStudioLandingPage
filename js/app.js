@@ -295,26 +295,12 @@ function renderProyectoHeaderHTML(p) {
             <h1 class="project-header__title reveal" data-delay="80">${p.nombre}</h1>
           </div>
           <div class="project-header__meta reveal" data-delay="160">
-            <div class="project-meta-item">
-              <div class="project-meta-item__label">Ubicación</div>
-              <div class="project-meta-item__value">${p.ubicacion}</div>
-            </div>
-            <div class="project-meta-item">
-              <div class="project-meta-item__label">Año</div>
-              <div class="project-meta-item__value">${p.año}</div>
-            </div>
-            <div class="project-meta-item">
-              <div class="project-meta-item__label">Tipología</div>
-              <div class="project-meta-item__value">${p.tipologia}</div>
-            </div>
-            <div class="project-meta-item">
-              <div class="project-meta-item__label">Tamaño</div>
-              <div class="project-meta-item__value">${p.tamaño}</div>
-            </div>
-            <div class="project-meta-item">
-              <div class="project-meta-item__label">Fotografia y Edición</div>
-              <div class="project-meta-item__value">${p.fotografia}</div>
-            </div>
+            ${p.ubicacion ? `<div class="project-meta-item"><div class="project-meta-item__label">Ubicación</div><div class="project-meta-item__value">${p.ubicacion}</div></div>` : ''}
+            ${p.año      ? `<div class="project-meta-item"><div class="project-meta-item__label">Año</div><div class="project-meta-item__value">${p.año}</div></div>` : ''}
+            ${p.tipologia ? `<div class="project-meta-item"><div class="project-meta-item__label">Tipología</div><div class="project-meta-item__value">${p.tipologia}</div></div>` : ''}
+            ${p.tamaño   ? `<div class="project-meta-item"><div class="project-meta-item__label">Tamaño</div><div class="project-meta-item__value">${p.tamaño}</div></div>` : ''}
+            ${p.proyecto ? `<div class="project-meta-item"><div class="project-meta-item__label">Proyecto</div><div class="project-meta-item__value">${p.proyecto}</div></div>` : ''}
+            ${p.fotografia ? `<div class="project-meta-item"><div class="project-meta-item__label">Fotografía</div><div class="project-meta-item__value">${p.fotografia}</div></div>` : ''}
           </div>
           ${p.descripcion ? `<p class="project-header__description reveal" data-delay="220">${p.descripcion}</p>` : ''}
         </div>
