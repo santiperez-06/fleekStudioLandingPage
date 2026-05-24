@@ -679,7 +679,7 @@
 .about-page__content {
   background: var(--ink);
   padding-block: var(--space-24);
-  overflow: hidden; /* clips the logo half that bleeds off the left edge */
+  overflow: clip; /* clips the logo half that bleeds off-screen without breaking sticky */
 }
 
 .about-page__grid {
