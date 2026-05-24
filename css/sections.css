@@ -671,7 +671,7 @@
    NOSOTROS — página standalone
    ============================================================ */
 .about-page__img {
-  width: 100%;
+  width: 75%;
   display: block;
   filter: grayscale(100%);
 }
@@ -711,7 +711,7 @@
 .about-page__text-col {
   display: flex;
   flex-direction: column;
-  gap: var(--space-10);
+  gap: var(--space-16);
 }
 
 .about-page__text {
@@ -721,9 +721,8 @@
 }
 
 @media (max-width: 768px) {
-  .about-page__top-img,
-  .about-page__bottom-img {
-    aspect-ratio: 4 / 3;
+  .about-page__img {
+    width: 100%;
   }
 
   .about-page__grid {
@@ -731,12 +730,7 @@
     padding-inline: var(--space-6);
   }
 
-  .about-page__isologo {
-    position: relative;
-    top: auto;
-    width: 160px;
-    height: 160px;
-    margin-left: -80px;
-    margin-bottom: var(--space-8);
+  .about-page__logo-col {
+    display: none;
   }
 }
