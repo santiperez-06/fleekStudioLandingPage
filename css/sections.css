@@ -559,12 +559,12 @@
 .footer__brand {
   display: flex;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-16);
 }
 
 .footer__logo {
-  height: 40px;
-  width: 160px;
+  height: 56px;
+  width: 220px;
   background-color: var(--white);
   -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
   mask-image: url('../imgs/FLEEK_Completo-01.png');
