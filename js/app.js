@@ -402,8 +402,8 @@ function renderFooterHTML() {
           <div class="footer__brand">
             <div class="footer__logo"></div>
             <div class="footer__contact">
-              <a href="mailto:fleekestudio@gmail.com">fleekestudio@gmail.com</a>
-              <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener">@fleekestudio</a>
+              <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
+              <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener">INSTAGRAM</a>
             </div>
           </div>
         </div>
