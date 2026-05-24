@@ -98,63 +98,25 @@
   padding-block: var(--space-16);
 }
 
-/*
-  El mosaico usa un sistema de "filas" con proporciones variables.
-  Cada .mosaic-row es un flex row con gap.
-  Las imágenes llenan el espacio según su flex-grow.
-
-  Patrones de fila disponibles (se repiten o mezclan):
-    .mosaic-row--full      → 1 imagen que ocupa todo el ancho
-    .mosaic-row--half      → 2 imágenes iguales
-    .mosaic-row--thirds    → 3 imágenes iguales
-    .mosaic-row--2-1       → imagen grande + imagen chica (2:1)
-    .mosaic-row--1-2       → imagen chica + imagen grande (1:2)
-    .mosaic-row--1-1-2     → chica + chica + grande
-*/
-
-.mosaic-row {
-  display: flex;
-  gap: 2px;
-  margin-bottom: 2px;
+/* 2-column masonry — imágenes en su proporción original */
+.mosaic-grid {
+  columns: 2;
+  column-gap: 2px;
 }
-
-.mosaic-row:last-child {
-  margin-bottom: 0;
-}
-
-/* Tipos de fila */
-.mosaic-row--full   .mosaic-item { flex: 1; }
-.mosaic-row--half   .mosaic-item { flex: 1; }
-.mosaic-row--thirds .mosaic-item { flex: 1; }
-
-.mosaic-row--2-1 .mosaic-item:first-child { flex: 2; }
-.mosaic-row--2-1 .mosaic-item:last-child  { flex: 1; }
-
-.mosaic-row--1-2 .mosaic-item:first-child { flex: 1; }
-.mosaic-row--1-2 .mosaic-item:last-child  { flex: 2; }
-
-.mosaic-row--1-1-2 .mosaic-item:nth-child(1) { flex: 1; }
-.mosaic-row--1-1-2 .mosaic-item:nth-child(2) { flex: 1; }
-.mosaic-row--1-1-2 .mosaic-item:nth-child(3) { flex: 2; }
 
 /* Ítem individual */
 .mosaic-item {
+  break-inside: avoid;
+  margin-bottom: 2px;
   overflow: hidden;
   background: var(--surface);
   cursor: zoom-in;
   position: relative;
 }
 
-/* Altura fija por fila — se puede sobreescribir con clase */
-.mosaic-row { height: 480px; }
-.mosaic-row--full { height: 640px; }
-.mosaic-row--thirds { height: 380px; }
-
 .mosaic-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  height: auto;
   display: block;
   transition: transform 0.7s var(--ease-out-expo);
   will-change: transform;
@@ -407,14 +369,8 @@
   }
 
   /* En mobile el mosaico se vuelve columna simple */
-  .mosaic-row {
-    flex-direction: column;
-    height: auto !important;
-  }
-
-  .mosaic-item {
-    height: 280px;
-    flex: none !important;
+  .mosaic-grid {
+    columns: 1;
   }
 
   .lightbox__btn--prev { left: var(--space-3); }

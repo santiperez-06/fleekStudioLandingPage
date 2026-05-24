@@ -33,11 +33,6 @@ async function fetchProyectos() {
 }
 
 
-/** Patrón de filas para el mosaico de detalle */
-const PATRON_FILAS    = ['full', '2-1', 'thirds', '1-2', 'half'];
-
-/** Fotos por tipo de fila */
-const FOTOS_POR_FILA  = { full: 1, '2-1': 2, thirds: 3, '1-2': 2, half: 2 };
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -341,33 +336,18 @@ function renderMosaicoHTML(fotos) {
     </div>
   `;
 
-  let rows = '';
-  let i = 0;
-  let filaIdx = 0;
-
-  while (i < fotos.length) {
-    const tipo     = PATRON_FILAS[filaIdx % PATRON_FILAS.length];
-    const cantidad = FOTOS_POR_FILA[tipo];
-    const lote     = fotos.slice(i, i + cantidad);
-    if (lote.length === 0) break;
-
-    const tipoReal = lote.length === 1 ? 'full' : lote.length === 2 ? 'half' : tipo;
-
-    const items = lote.map(src => `
-      <div class="mosaic-item">
-        <img src="${src}" alt="" loading="lazy" />
-        ${zoomIcon}
-      </div>
-    `).join('');
-
-    rows += `<div class="mosaic-row mosaic-row--${tipoReal} reveal">${items}</div>`;
-    i += lote.length;
-    filaIdx++;
-  }
+  const items = fotos.map((src, idx) => `
+    <div class="mosaic-item reveal" data-index="${idx}">
+      <img src="${src}" alt="" loading="lazy" />
+      ${zoomIcon}
+    </div>
+  `).join('');
 
   return `
     <section class="project-mosaic" aria-label="Fotos del proyecto">
-      <div class="container">${rows}</div>
+      <div class="container">
+        <div class="mosaic-grid">${items}</div>
+      </div>
     </section>
     ${renderLightboxHTML()}
   `;
