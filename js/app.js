@@ -435,11 +435,53 @@ function initModules({ hero, lightbox }) {
 }
 
 /* ============================================================
+   VISTA: NOSOTROS
+   ============================================================ */
+
+async function renderNosotros() {
+  document.querySelector('.navbar')?.style.removeProperty('display');
+  document.querySelector('.navbar__drawer')?.style.removeProperty('display');
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <main id="main-content">
+      <div class="about-page__top-img">
+        <img src="/imgs/abouttop.jpeg" alt="Fleek studio — espacio" />
+      </div>
+      <section class="about-page__content">
+        <div class="container">
+          <div class="about-page__grid">
+            <div class="about-page__logo-col">
+              <div class="about-page__isologo"></div>
+            </div>
+            <div class="about-page__text-col">
+              <p class="about-page__lead">Somos Manuel y Martín, los fundadores de Fleek Architecture + Construction.</p>
+              <p class="about-page__body">Nos especializamos en el diseño, la construcción y la gestión de proyectos arquitectónicos y comerciales, con un enfoque en la calidad, la eficiencia y la innovación. Nos apasiona crear espacios funcionales y distintivos que respondan a las necesidades específicas de cada cliente. En Fleek, combinamos experiencia técnica y creatividad para desarrollar soluciones personalizadas que destacan por su precisión y durabilidad. Desde proyectos gastronómicos y de retail hasta oficinas corporativas, abordamos cada obra con compromiso, profesionalismo y atención al detalle, garantizando resultados que transformen ideas en realidad.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="about-page__bottom-img">
+        <img src="/imgs/aboutbottom.jpeg" alt="Fleek studio — obra" />
+      </div>
+    </main>
+    ${renderFooterHTML()}
+  `;
+
+  document.title = 'Nosotros — FLEEK studio';
+  scrollToTop();
+  initModules({ hero: false, lightbox: false });
+  document.querySelector('.navbar')?.classList.add('scrolled');
+  document.querySelector('.navbar')?.classList.remove('hero-active');
+}
+
+/* ============================================================
    ARRANQUE
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
   Router.on('/',              renderHome);
+  Router.on('/nosotros',      renderNosotros);
   Router.on('/contacto',      renderContacto);
   Router.on('/obras/:id', renderProyecto);
   Router.on('/admin',         () => {
