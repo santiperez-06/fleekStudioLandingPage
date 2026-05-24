@@ -401,16 +401,20 @@ function renderFooterHTML() {
         <div class="footer__inner">
           <div class="footer__brand">
             <div class="footer__logo"></div>
-            <div class="footer__cols">
-              <div class="footer__col">
-                <span class="footer__col-title">Contacto</span>
-                <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
-              </div>
-              <div class="footer__col">
-                <span class="footer__col-title">Social</span>
-                <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener">Instagram</a>
-              </div>
+            <div class="footer__col">
+              <span class="footer__col-title">Contacto</span>
+              <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
             </div>
+          </div>
+          <div class="footer__col footer__col--social">
+            <span class="footer__col-title">Social</span>
+            <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg class="footer__ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>

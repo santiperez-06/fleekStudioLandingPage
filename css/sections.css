@@ -551,7 +551,7 @@
 .footer__inner {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-4);
 }
@@ -572,11 +572,6 @@
   mask-repeat: no-repeat;
   mask-size: contain;
   flex-shrink: 0;
-}
-
-.footer__cols {
-  display: flex;
-  gap: var(--space-12);
 }
 
 .footer__col {
@@ -603,6 +598,12 @@
 
 .footer__col a:hover {
   color: var(--highlight);
+}
+
+.footer__ig {
+  width: 28px;
+  height: 28px;
+  display: block;
 }
 
 /* ============================================================
