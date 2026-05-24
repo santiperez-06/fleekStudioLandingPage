@@ -69,6 +69,10 @@
   text-align: right;
 }
 
+.project-meta-item:nth-child(even) {
+  text-align: left;
+}
+
 .project-meta-item__label {
   font-family: var(--font-sans);
   font-size: var(--text-xs);
@@ -362,7 +366,8 @@
     gap: var(--space-3) var(--space-6);
   }
 
-  .project-meta-item {
+  .project-meta-item,
+  .project-meta-item:nth-child(even) {
     text-align: left;
   }
 
