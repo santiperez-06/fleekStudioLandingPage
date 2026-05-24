@@ -581,7 +581,7 @@
 }
 
 .footer__contact a {
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   color: var(--ink-muted);
   letter-spacing: 0.02em;
   transition: color var(--duration-fast);
