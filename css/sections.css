@@ -720,18 +720,12 @@
   line-height: 1.8;
 }
 
-.about-page__tagline {
-  background: var(--ink);
-  padding-block: var(--space-20);
-  border-top: 1px solid var(--ink-secondary);
-}
-
 .about-page__tagline-text {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-3);
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-size: var(--text-xl);
   font-weight: 700;
   color: var(--white);
   letter-spacing: -0.02em;
@@ -741,8 +735,8 @@
 
 .about-page__tagline-logo {
   display: inline-block;
-  width: clamp(140px, 18vw, 340px);
-  height: clamp(2.5rem, 7vw, 6rem);
+  width: 120px;
+  height: var(--text-xl);
   background-color: var(--highlight);
   -webkit-mask-image: url('../imgs/FLEEK_Logo-05.png');
   mask-image: url('../imgs/FLEEK_Logo-05.png');
@@ -769,6 +763,5 @@
 
   .about-page__tagline-text {
     flex-wrap: wrap;
-    gap: var(--space-3);
   }
 }

@@ -454,14 +454,10 @@ async function renderNosotros() {
             <img class="about-page__img" src="/imgs/abouttop.jpeg" alt="Fleek studio — espacio" />
             <p class="about-page__text">Somos Manuel y Martín, los fundadores de Fleek Architecture + Construction. Nos especializamos en el diseño, la construcción y la gestión de proyectos arquitectónicos y comerciales, con un enfoque en la calidad, la eficiencia y la innovación. Nos apasiona crear espacios funcionales y distintivos que respondan a las necesidades específicas de cada cliente. En Fleek, combinamos experiencia técnica y creatividad para desarrollar soluciones personalizadas que destacan por su precisión y durabilidad. Desde proyectos gastronómicos y de retail hasta oficinas corporativas, abordamos cada obra con compromiso, profesionalismo y atención al detalle, garantizando resultados que transformen ideas en realidad.</p>
             <img class="about-page__img" src="/imgs/aboutbottom.jpeg" alt="Fleek studio — obra" />
+            <p class="about-page__tagline-text">
+              WE BUILD ON <span class="about-page__tagline-logo"></span>
+            </p>
           </div>
-        </div>
-      </section>
-      <section class="about-page__tagline">
-        <div class="container">
-          <p class="about-page__tagline-text">
-            WE BUILD ON <span class="about-page__tagline-logo"></span>
-          </p>
         </div>
       </section>
     </main>
