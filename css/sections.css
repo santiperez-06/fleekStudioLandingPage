@@ -685,8 +685,6 @@
 .about-page__grid {
   display: grid;
   grid-template-columns: 280px 1fr;
-  max-width: 1400px;
-  margin: 0 auto;
   padding-right: var(--space-6);
 }
 
@@ -712,6 +710,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
+  padding-left: 30%;
 }
 
 .about-page__text {
