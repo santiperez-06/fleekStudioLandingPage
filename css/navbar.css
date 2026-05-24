@@ -15,7 +15,12 @@
   align-items: center;
   padding-inline: var(--space-6);
   transition: border-color var(--duration-base) var(--ease-standard),
-              background var(--duration-base) var(--ease-standard);
+              background var(--duration-base) var(--ease-standard),
+              transform 0.35s var(--ease-out-expo);
+}
+
+.navbar.hidden {
+  transform: translateY(-100%);
 }
 
 .navbar.hero-active .navbar__logo,

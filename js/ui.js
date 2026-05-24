@@ -44,6 +44,24 @@ function initNavbar() {
   sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none';
   document.body.prepend(sentinel);
   scrollObserver.observe(sentinel);
+
+  // Hide on scroll down, show on scroll up
+  let lastY = 0;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (y > lastY && y > 80) {
+        navbar.classList.add('hidden');
+      } else {
+        navbar.classList.remove('hidden');
+      }
+      lastY = y;
+      ticking = false;
+    });
+  }, { passive: true });
 }
 
 /* ============================================================
