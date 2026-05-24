@@ -857,4 +857,12 @@
   .admin-form-row {
     grid-template-columns: 1fr;
   }
+
+  .admin-photos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-photo-item__actions {
+    opacity: 1;
+  }
 }
