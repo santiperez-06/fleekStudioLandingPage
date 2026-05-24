@@ -457,6 +457,13 @@ async function renderNosotros() {
           </div>
         </div>
       </section>
+      <section class="about-page__tagline">
+        <div class="container">
+          <p class="about-page__tagline-text">
+            WE BUILD ON <span class="about-page__tagline-logo"></span>
+          </p>
+        </div>
+      </section>
     </main>
     ${renderFooterHTML()}
   `;
