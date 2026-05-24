@@ -551,30 +551,43 @@
 .footer__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: var(--space-4);
 }
 
-.footer__copy {
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.footer__logo {
+  height: 40px;
+  width: 160px;
+  background-color: var(--white);
+  -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
+  mask-image: url('../imgs/FLEEK_Completo-01.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  flex-shrink: 0;
+}
+
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer__contact a {
   font-size: var(--text-xs);
   color: var(--ink-muted);
   letter-spacing: 0.02em;
-}
-
-.footer__links {
-  display: flex;
-  gap: var(--space-6);
-  list-style: none;
-}
-
-.footer__links a {
-  font-size: var(--text-xs);
-  color: var(--ink-muted);
   transition: color var(--duration-fast);
 }
 
-.footer__links a:hover {
+.footer__contact a:hover {
   color: var(--highlight);
 }
 
@@ -632,8 +645,9 @@
     grid-template-columns: 1fr;
   }
 
-  .footer__inner {
+  .footer__brand {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-4);
   }
 }

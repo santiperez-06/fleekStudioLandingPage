@@ -399,10 +399,13 @@ function renderFooterHTML() {
     <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="footer__inner">
-          <span class="footer__copy">© 2026 FLEEK studio — Todos los derechos reservados</span>
-          <ul class="footer__links">
-            <li><a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener">Instagram</a></li>
-          </ul>
+          <div class="footer__brand">
+            <div class="footer__logo"></div>
+            <div class="footer__contact">
+              <a href="mailto:fleekestudio@gmail.com">fleekestudio@gmail.com</a>
+              <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener">@fleekestudio</a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
