@@ -685,7 +685,6 @@
 .about-page__grid {
   display: grid;
   grid-template-columns: 280px 1fr;
-  align-items: start;
   max-width: 1400px;
   margin: 0 auto;
   padding-right: var(--space-16);
