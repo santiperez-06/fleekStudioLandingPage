@@ -736,7 +736,7 @@
 .about-page__tagline-logo {
   display: inline-block;
   width: 120px;
-  height: var(--text-2xl);
+  height: 80px;
   background-color: var(--highlight);
   -webkit-mask-image: url('../imgs/FLEEK_Logo-05.png');
   mask-image: url('../imgs/FLEEK_Logo-05.png');
