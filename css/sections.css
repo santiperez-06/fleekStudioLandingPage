@@ -556,11 +556,6 @@
   gap: var(--space-4);
 }
 
-.footer__brand {
-  display: flex;
-  align-items: center;
-  gap: var(--space-16);
-}
 
 .footer__logo {
   height: 72px;
@@ -600,9 +595,14 @@
   color: var(--highlight);
 }
 
+.footer__col--contact {
+  text-align: center;
+  align-items: center;
+}
+
 .footer__ig {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   display: block;
 }
 
@@ -660,10 +660,14 @@
     grid-template-columns: 1fr;
   }
 
-  .footer__brand {
-    flex-direction: column;
+  .footer__inner {
+    justify-content: flex-start;
+    gap: var(--space-8);
+  }
+
+  .footer__col--contact {
+    text-align: left;
     align-items: flex-start;
-    gap: var(--space-4);
   }
 }
 

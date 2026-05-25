@@ -399,12 +399,10 @@ function renderFooterHTML() {
     <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="footer__inner">
-          <div class="footer__brand">
-            <div class="footer__logo"></div>
-            <div class="footer__col">
-              <span class="footer__col-title">Contacto</span>
-              <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
-            </div>
+          <div class="footer__logo"></div>
+          <div class="footer__col footer__col--contact">
+            <span class="footer__col-title">Contacto</span>
+            <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
           </div>
           <div class="footer__col footer__col--social">
             <a href="https://www.instagram.com/fleekestudio/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -452,7 +450,7 @@ async function renderNosotros() {
           </div>
           <div class="about-page__text-col">
             <h2 class="section__title">SOMOS FLEEK</h2>
-            <p class="about-page__text>Somos Manuel y Martín, los fundadores de Fleek Architecture + Construction. Nos especializamos en el diseño, la construcción y la gestión de proyectos arquitectónicos y comerciales, con un enfoque en la calidad, la eficiencia y la innovación.</p>
+            <p class="about-page__text">Somos Manuel y Martín, los fundadores de Fleek Architecture + Construction. Nos especializamos en el diseño, la construcción y la gestión de proyectos arquitectónicos y comerciales, con un enfoque en la calidad, la eficiencia y la innovación.</p>
             <img class="about-page__img" src="/imgs/abouttop.jpeg" alt="Fleek studio — espacio" />
             <p class="about-page__text">Nos apasiona crear espacios funcionales y distintivos que respondan a las necesidades específicas de cada cliente. En Fleek, combinamos experiencia técnica y creatividad para desarrollar soluciones personalizadas que destacan por su precisión y durabilidad.</p>
             <img class="about-page__img" src="/imgs/aboutbottom.jpeg" alt="Fleek studio — obra" />
