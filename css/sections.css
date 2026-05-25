@@ -701,7 +701,7 @@
   top: 25vh;
   width: 560px;
   height: 560px;
-  margin-left: -280px; /* shifts logo left so only right half is visible */
+  margin-left: -170px; /* shifts logo left so only right half is visible */
   background-color: var(--highlight);
   -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
   mask-image: url('../imgs/FLEEK_Isologo-09.png');
