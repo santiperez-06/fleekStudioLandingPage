@@ -760,6 +760,10 @@
     display: none;
   }
 
+  .about-page__text-col {
+    padding-left: 0;
+  }
+
   .about-page__tagline-text {
     flex-wrap: wrap;
   }
