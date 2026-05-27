@@ -565,7 +565,10 @@
   mask-image: url('../imgs/FLEEK_Completo-01.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
   mask-size: contain;
+  -webkit-mask-position: center left;
+  mask-position: center left;
   flex-shrink: 0;
 }
 
@@ -707,7 +710,10 @@
   mask-image: url('../imgs/FLEEK_Isologo-09.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
   mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .about-page__text-col {
@@ -747,7 +753,9 @@
   mask-image: url('../imgs/FLEEK_Logo-05.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
   mask-size: contain;
+  -webkit-mask-position: center left;
   mask-position: center left;
   flex-shrink: 0;
 }
