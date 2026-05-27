@@ -399,7 +399,7 @@ function renderFooterHTML() {
     <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="footer__inner">
-          <div class="footer__logo"></div>
+          <img class="footer__logo" src="/imgs/FLEEK_Completo-01.png" alt="FLEEK studio" />
           <div class="footer__col footer__col--contact">
             <span class="footer__col-title">Contacto</span>
             <a href="mailto:hola@fleek-studio.com">hola@fleek-studio.com</a>
@@ -446,7 +446,7 @@ async function renderNosotros() {
       <section class="about-page__content">
         <div class="about-page__grid">
           <div class="about-page__logo-col">
-            <div class="about-page__isologo"></div>
+            <img class="about-page__isologo" src="/imgs/FLEEK_Isologo-09.png" alt="" />
           </div>
           <div class="about-page__text-col">
             <h2 class="section__title">SOMOS FLEEK</h2>
@@ -456,7 +456,7 @@ async function renderNosotros() {
             <img class="about-page__img" src="/imgs/aboutbottom.jpeg" alt="Fleek studio — obra" />
             <p class="about-page__text">Desde proyectos gastronómicos y de retail hasta oficinas corporativas, abordamos cada obra con compromiso, profesionalismo y atención al detalle, garantizando resultados que transformen ideas en realidad.</p>
             <p class="about-page__tagline-text">
-              WE BUILD ON <span class="about-page__tagline-logo"></span>
+              WE BUILD ON <img class="about-page__tagline-logo" src="/imgs/FLEEK_Logo-05.png" alt="FLEEK" />
             </p>
           </div>
         </div>
