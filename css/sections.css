@@ -699,7 +699,7 @@
   height: auto;
   margin-left: -170px;
   display: block;
-  filter: brightness(0) saturate(100%) invert(97%) sepia(71%) saturate(3000%) hue-rotate(20deg) brightness(105%);
+  filter: brightness(0) saturate(100%) invert(88%) sepia(100%) saturate(2000%) hue-rotate(30deg) brightness(110%);
 }
 
 .about-page__text-col {
@@ -736,7 +736,7 @@
   display: inline-block;
   vertical-align: middle;
   flex-shrink: 0;
-  filter: brightness(0) saturate(100%) invert(97%) sepia(71%) saturate(3000%) hue-rotate(20deg) brightness(105%);
+  filter: brightness(0) saturate(100%) invert(88%) sepia(100%) saturate(2000%) hue-rotate(30deg) brightness(110%);
 }
 
 @media (max-width: 768px) {
