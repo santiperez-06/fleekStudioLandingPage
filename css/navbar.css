@@ -45,20 +45,34 @@
 /* Logo / wordmark */
 .navbar__logo {
   height: 52px;
+  width: 52px;
   cursor: pointer;
+  background-color: var(--highlight);
+  -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  transition: color var(--duration-fast);
+}
+
+.navbar__logo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.navbar.hero-active .navbar__logo {
+  background-color: var(--white);
 }
 
 .navbar__logo img {
+  opacity: 0;
   height: 52px;
-  width: auto;
-  display: block;
-  /* highlight color: invert → sepia → saturate → hue-rotate to yellow-green */
-  filter: invert(1) sepia(1) saturate(10) hue-rotate(15deg);
-  transition: filter var(--duration-fast);
-}
-
-.navbar.hero-active .navbar__logo img {
-  filter: brightness(0) invert(1);
 }
 
 /* Links centrados */
