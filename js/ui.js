@@ -272,6 +272,11 @@ function initCustomCursor() {
 /* ============================================================
    INIT
    ============================================================ */
+// Detect Safari (excludes Chrome/Android which also include "Safari" in UA)
+if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+  document.documentElement.classList.add('is-safari');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initMobileDrawer();

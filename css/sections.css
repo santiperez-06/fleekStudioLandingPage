@@ -559,9 +559,35 @@
 
 .footer__logo {
   height: 72px;
+  width: 280px;
+  flex-shrink: 0;
+  background-color: var(--white);
+  -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
+  mask-image: url('../imgs/FLEEK_Completo-01.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center left;
+  mask-position: center left;
+}
+
+.footer__logo__img {
+  opacity: 0;
+  height: 72px;
   width: auto;
   display: block;
-  flex-shrink: 0;
+}
+
+.is-safari .footer__logo {
+  background-color: transparent;
+  -webkit-mask-image: none;
+  mask-image: none;
+  width: auto;
+}
+
+.is-safari .footer__logo__img {
+  opacity: 1;
   filter: brightness(0) invert(1);
 }
 
@@ -696,9 +722,35 @@
   position: sticky;
   top: 25vh;
   width: 560px;
-  height: auto;
+  height: 560px;
   margin-left: -170px;
+  background-color: var(--highlight);
+  -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.about-page__isologo__img {
+  opacity: 0;
+  width: 560px;
+  height: auto;
   display: block;
+}
+
+.is-safari .about-page__isologo {
+  background-color: transparent;
+  -webkit-mask-image: none;
+  mask-image: none;
+  height: auto;
+}
+
+.is-safari .about-page__isologo__img {
+  opacity: 1;
   filter: brightness(0) saturate(100%) invert(93%) sepia(100%) saturate(1500%) hue-rotate(0deg) brightness(120%);
 }
 
@@ -731,11 +783,38 @@
 }
 
 .about-page__tagline-logo {
-  height: 80px;
-  width: auto;
   display: inline-block;
+  width: 300px;
+  height: 80px;
   vertical-align: middle;
   flex-shrink: 0;
+  background-color: var(--highlight);
+  -webkit-mask-image: url('../imgs/FLEEK_Logo-05.png');
+  mask-image: url('../imgs/FLEEK_Logo-05.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center left;
+  mask-position: center left;
+}
+
+.about-page__tagline-logo__img {
+  opacity: 0;
+  height: 80px;
+  width: auto;
+  display: block;
+}
+
+.is-safari .about-page__tagline-logo {
+  background-color: transparent;
+  -webkit-mask-image: none;
+  mask-image: none;
+  width: auto;
+}
+
+.is-safari .about-page__tagline-logo__img {
+  opacity: 1;
   filter: brightness(0) saturate(100%) invert(93%) sepia(100%) saturate(1500%) hue-rotate(0deg) brightness(120%);
 }
 

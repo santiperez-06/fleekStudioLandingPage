@@ -45,19 +45,46 @@
 /* Logo / wordmark */
 .navbar__logo {
   height: 52px;
+  width: 52px;
   cursor: pointer;
   position: relative;
+  background-color: var(--highlight);
+  -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
+.navbar.hero-active .navbar__logo {
+  background-color: var(--white);
+}
+
+/* img inside is only used by Safari */
 .navbar__logo-img {
+  opacity: 0;
   height: 52px;
   width: auto;
   display: block;
-  filter: brightness(0) saturate(100%) invert(93%) sepia(100%) saturate(1500%) hue-rotate(0deg) brightness(120%);
   transition: filter var(--duration-fast);
 }
 
-.navbar.hero-active .navbar__logo-img {
+/* Safari overrides */
+.is-safari .navbar__logo {
+  background-color: transparent;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.is-safari .navbar__logo-img {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(93%) sepia(100%) saturate(1500%) hue-rotate(0deg) brightness(120%);
+}
+
+.is-safari .hero-active .navbar__logo-img {
   filter: brightness(0) invert(1);
 }
 
