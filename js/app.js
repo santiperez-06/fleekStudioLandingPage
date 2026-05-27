@@ -509,5 +509,4 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof initNavbar       === 'function') initNavbar();
   if (typeof initMobileDrawer === 'function') initMobileDrawer();
   if (typeof initSmoothScroll === 'function') initSmoothScroll();
-  if (typeof initCustomCursor === 'function') initCustomCursor();
 });

@@ -45,13 +45,17 @@
 /* Logo / wordmark */
 .navbar__logo {
   height: 52px;
+  width: 52px;
   cursor: pointer;
   background-color: var(--highlight);
   -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
   mask-image: url('../imgs/FLEEK_Isologo-09.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
   mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
   transition: color var(--duration-fast);
 }
 
