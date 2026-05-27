@@ -48,8 +48,8 @@
   width: 52px;
   cursor: pointer;
   background-color: var(--highlight);
-  -webkit-mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Isologo-09.png');
-  mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Isologo-09.png');
+  -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  mask-image: url('../imgs/FLEEK_Isologo-09.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: contain;

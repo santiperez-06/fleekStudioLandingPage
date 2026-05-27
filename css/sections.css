@@ -561,8 +561,8 @@
   height: 72px;
   width: 280px;
   background-color: var(--white);
-  -webkit-mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Completo-01.png');
-  mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Completo-01.png');
+  -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
+  mask-image: url('../imgs/FLEEK_Completo-01.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: contain;
@@ -706,8 +706,8 @@
   height: 560px;
   margin-left: -170px; /* shifts logo left so only right half is visible */
   background-color: var(--highlight);
-  -webkit-mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Isologo-09.png');
-  mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Isologo-09.png');
+  -webkit-mask-image: url('../imgs/FLEEK_Isologo-09.png');
+  mask-image: url('../imgs/FLEEK_Isologo-09.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: contain;
@@ -749,8 +749,8 @@
   width: 300px;
   height: 110px;
   background-color: var(--highlight);
-  -webkit-mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Logo-05.png');
-  mask-image: url('https://pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev/brand/FLEEK_Logo-05.png');
+  -webkit-mask-image: url('../imgs/FLEEK_Logo-05.png');
+  mask-image: url('../imgs/FLEEK_Logo-05.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: contain;

@@ -47,7 +47,7 @@ app.use(helmet({
       scriptSrc:  ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
       styleSrc:   ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'fonts.gstatic.com'],
       fontSrc:    ["'self'", 'fonts.gstatic.com'],
-      imgSrc:     ["'self'", 'data:', 'blob:', 'picsum.photos', 'www.fleek-studio.com.ar', 'pub-1fee675071ea42b5a67c36a57e5e9018.r2.dev', process.env.R2_PUBLIC_URL].filter(Boolean),
+      imgSrc:     ["'self'", 'data:', 'blob:', 'picsum.photos', 'www.fleek-studio.com.ar', process.env.R2_PUBLIC_URL].filter(Boolean),
       connectSrc: ["'self'", 'www.fleek-studio.com.ar'],
     },
   },
