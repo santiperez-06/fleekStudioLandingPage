@@ -482,7 +482,7 @@ async function renderNosotros() {
 
 document.addEventListener('DOMContentLoaded', () => {
   Router.on('/',              renderHome);
-  Router.on('/nosotros',      renderNosotros);
+  // Router.on('/nosotros',      renderNosotros);
   Router.on('/contacto',      renderContacto);
   Router.on('/obras/:id', renderProyecto);
   Router.on('/admin',         () => {
