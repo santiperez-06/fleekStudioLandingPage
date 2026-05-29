@@ -149,6 +149,10 @@ app.delete('/api/admin/proyectos/:id/fotos/:index',  requireAuth, admin.eliminar
 app.put   ('/api/admin/proyectos/:id/fotos/orden',   requireAuth, admin.reordenarFotos);
 app.put   ('/api/admin/proyectos/:id/portada',       requireAuth, admin.cambiarPortada);
 
+/* ---- SEO files ---- */
+app.get('/sitemap.xml', (_req, res) => res.sendFile(path.join(__dirname, 'sitemap.xml')));
+app.get('/robots.txt',  (_req, res) => res.sendFile(path.join(__dirname, 'robots.txt')));
+
 /* ---- SPA fallback ---- */
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
