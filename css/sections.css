@@ -559,35 +559,14 @@
 
 .footer__logo {
   height: 72px;
-  width: 280px;
   flex-shrink: 0;
-  background-color: var(--white);
-  -webkit-mask-image: url('../imgs/FLEEK_Completo-01.png');
-  mask-image: url('../imgs/FLEEK_Completo-01.png');
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-position: center left;
-  mask-position: center left;
 }
 
 .footer__logo__img {
-  opacity: 0;
+  opacity: 1;
   height: 72px;
   width: auto;
   display: block;
-}
-
-.is-safari .footer__logo {
-  background-color: transparent;
-  -webkit-mask-image: none;
-  mask-image: none;
-  width: auto;
-}
-
-.is-safari .footer__logo__img {
-  opacity: 1;
   filter: brightness(0) invert(1);
 }
 
